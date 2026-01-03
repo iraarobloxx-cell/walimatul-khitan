@@ -5,238 +5,312 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walimatul Khitan Dzaky & Dzikri</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   font-family:'Poppins',sans-serif;
-  background:url('bg-flower.png') center/cover fixed no-repeat;
+  background:url('bg-flower.png') center/cover fixed;
   color:#fff;
+  text-align:center;
   overflow-x:hidden;
 }
-.overlay{
-  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85));
+
+/* overlay gelap */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:-1;
+}
+
+/* ===== TEXT STYLE ===== */
+h2{
+  font-family:'Playfair Display',serif;
+  color:#d4af37;
+  margin-bottom:18px;
+  text-shadow:0 2px 10px rgba(0,0,0,.6);
+}
+p{
+  line-height:1.9;
+  color:#eee;
+  text-shadow:0 1px 6px rgba(0,0,0,.6);
+}
+
+/* ===== REVEAL ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ===== BUTTON ===== */
+.btn{
+  display:inline-block;
+  margin-top:25px;
+  padding:14px 36px;
+  background:#d4af37;
+  color:#000;
+  border-radius:30px;
+  font-weight:600;
+  text-decoration:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 
 /* ===== ORNAMEN ===== */
 .wayang{
-  position:fixed;
-  bottom:0;
-  width:180px;
-  opacity:.55;
-  z-index:1;
+  position:absolute;
+  bottom:-30px;
+  width:150px;
+  opacity:.7;
 }
-.wayang.left{left:-30px}
-.wayang.right{right:-30px;transform:scaleX(-1)}
+.wayang.left{left:-20px}
+.wayang.right{right:-20px;transform:scaleX(-1)}
 
 .flower{
   position:absolute;
   width:120px;
   opacity:.8;
-  animation:float 6s ease-in-out infinite;
 }
-.flower.f1{top:120px;left:15px}
-.flower.f2{top:300px;right:15px}
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(15px)}
-  100%{transform:translateY(0)}
-}
-
-/* ===== ANIMASI ===== */
-.reveal{opacity:0;transform:translateY(40px);transition:1s}
-.reveal.show{opacity:1;transform:none}
-
-/* ===== COVER ===== */
-.cover{
-  min-height:100vh;
-  background:
-    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
-    url('cover.jpg') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  position:fixed;
-  inset:0;
-  z-index:10;
-}
-.cover.hide{opacity:0;pointer-events:none;transition:1s}
-.cover h1{font-family:'Playfair Display',serif;font-size:40px}
-.cover h2{color:#d4af37;margin:10px 0}
-.btn{
-  margin-top:30px;
-  padding:14px 36px;
-  border:none;
-  border-radius:30px;
-  background:#d4af37;
-  font-weight:600;
-  cursor:pointer;
-}
+.flower.top{top:-40px;left:50%;transform:translateX(-50%)}
+.flower.left{top:160px;left:-20px}
+.flower.right{top:260px;right:-20px}
 
 /* ===== SECTION ===== */
 section{
-  padding:90px 20px;
-  text-align:center;
+  padding:80px 20px;
   position:relative;
-  z-index:2;
-}
-h2{
-  font-family:'Playfair Display',serif;
-  color:#d4af37;
-  margin-bottom:20px;
-}
-p{line-height:1.9;color:#eee}
-
-/* ===== PROFIL ===== */
-.profile{
   max-width:900px;
   margin:auto;
+}
+
+/* ===== COVER ===== */
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.hero h1{font-size:42px}
+.hero h3{font-weight:300;margin-top:10px}
+
+/* ===== PROFILE ===== */
+.profile{
   display:grid;
   gap:40px;
 }
 .card{
   background:rgba(255,255,255,.08);
-  border-radius:22px;
+  border:1px solid rgba(212,175,55,.4);
+  border-radius:20px;
   padding:25px;
   backdrop-filter:blur(6px);
 }
 .card img{
   width:100%;
-  border-radius:18px;
+  border-radius:16px;
 }
-.name{color:#d4af37;font-size:20px;margin-top:15px}
 
-/* ===== GALERI ===== */
+/* ===== COUNTDOWN ===== */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.time{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(212,175,55,.4);
+  padding:18px;
+  border-radius:16px;
+  min-width:80px;
+}
+.time span{
+  font-size:26px;
+  color:#d4af37;
+  font-weight:600;
+}
+
+/* ===== GALLERY ===== */
 .gallery{
-  max-width:1000px;
-  margin:auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  grid-template-columns:repeat(2,1fr);
   gap:18px;
 }
 .gallery img{
   width:100%;
   border-radius:16px;
-  transition:.3s;
 }
-.gallery img:hover{transform:scale(1.05)}
 
-/* ===== GIFT ===== */
-.copy-btn{
-  margin-top:15px;
-  padding:10px 25px;
-  border-radius:20px;
+/* ===== GOLD PARTICLE ===== */
+.gold{
+  position:fixed;
+  top:-10px;
+  width:6px;
+  height:6px;
+  background:radial-gradient(circle,#ffd700,#d4af37);
+  border-radius:50%;
+  opacity:.8;
+  animation:fall linear infinite;
+  pointer-events:none;
+}
+@keyframes fall{
+  to{transform:translateY(110vh)}
+}
+
+/* ===== FORM ===== */
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
   border:none;
-  background:#d4af37;
-  font-weight:600;
-  cursor:pointer;
+  margin-top:10px;
 }
-
-footer{padding:40px 20px;color:#aaa}
+textarea{height:100px}
 </style>
 </head>
 
 <body>
 
-<!-- ORNAMEN -->
-<img src="wayang.png" class="wayang left">
-<img src="wayang.png" class="wayang right">
-
 <!-- AUDIO -->
-<audio id="bgm" loop>
+<audio id="music" loop>
   <source src="lagu.mp3" type="audio/mpeg">
 </audio>
 
+<!-- GOLD PARTICLE -->
+<script>
+for(let i=0;i<30;i++){
+  const g=document.createElement('div');
+  g.className='gold';
+  g.style.left=Math.random()*100+'vw';
+  g.style.animationDuration=5+Math.random()*5+'s';
+  document.body.appendChild(g);
+}
+</script>
+
 <!-- COVER -->
-<div class="cover" id="cover">
-  <div>
+<section class="hero">
+  <div class="reveal show">
     <h1>Walimatul Khitan</h1>
     <h2>Dzaky & Dzikri</h2>
-    <p>Tasyakuran Khitanan</p>
-    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+    <h3>Tasyakuran Khitanan</h3>
+    <button class="btn" onclick="document.getElementById('music').play()">Buka Undangan</button>
   </div>
-</div>
+</section>
 
-<div class="overlay" id="content" style="display:none">
-
-<img src="flower1.png" class="flower f1">
-<img src="flower2.png" class="flower f2">
-
+<!-- PEMBUKA -->
 <section class="reveal">
+  <img src="flower1.png" class="flower top">
   <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
-  <p>Assalamu’alaikum Warahmatullahi Wabarakatuh</p>
   <p>
-    Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud
-    mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara
-    Walimatul Khitan putra kami.
+    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
+    Dengan memohon rahmat dan ridho Allah SWT,
+    kami sekeluarga bermaksud mengundang
+    Bapak/Ibu/Saudara/i untuk menghadiri
+    acara Walimatul Khitan putra kami tercinta.
   </p>
 </section>
 
+<!-- PROFIL -->
 <section class="reveal">
   <h2>Putra Kami</h2>
   <div class="profile">
     <div class="card">
       <img src="dzaky.jpg">
-      <div class="name">RB. Dzaky Ferdiansyah S</div>
+      <h3 style="color:#d4af37">RB. Dzaky Ferdiansyah S</h3>
       <p>Putra Pertama<br>Bapak Sudarman, Amd<br>& Ibu Endang Aprilawati, S.Tr.Keb</p>
     </div>
     <div class="card">
       <img src="dzikri.jpg">
-      <div class="name">RB. Dzikri Athar Alfariq</div>
+      <h3 style="color:#d4af37">RB. Dzikri Athar Alfariq</h3>
       <p>Putra Kedua<br>Bapak Sudarman, Amd<br>& Ibu Endang Aprilawati, S.Tr.Keb</p>
     </div>
   </div>
+  <img src="wayang.png" class="wayang left">
+  <img src="wayang.png" class="wayang right">
 </section>
 
+<!-- COUNTDOWN -->
+<section class="reveal">
+  <h2>Hitung Mundur Acara</h2>
+  <div class="countdown" id="countdown"></div>
+</section>
+
+<!-- TEMPAT -->
+<section class="reveal">
+  <h2>Waktu & Tempat</h2>
+  <p>
+    Minggu, 25 Januari 2026<br>
+    Pukul 08.30 WIB – Selesai<br><br>
+    Gedung Pertemuan Prumnas Griya Anugerah
+  </p>
+  <a class="btn" href="https://maps.google.com/?q=Gedung+Pertemuan+Prumnas+Griya+Anugerah" target="_blank">📍 Lihat Lokasi</a>
+</section>
+
+<!-- KENANGAN -->
 <section class="reveal">
   <h2>Kenangan</h2>
-  <p>Setiap senyuman adalah doa, setiap langkah adalah cerita indah.</p>
+  <p>Setiap tawa, langkah kecil, dan doa menjadi kenangan indah yang akan selalu kami simpan.</p>
   <div class="gallery">
     <img src="kenangan1.jpg">
     <img src="kenangan2.jpg">
     <img src="kenangan3.jpg">
     <img src="kenangan4.jpg">
+    <img src="kenangan5.jpg">
+    <img src="kenangan6.jpg">
   </div>
 </section>
 
+<!-- GIFT -->
 <section class="reveal">
   <h2>Gift</h2>
   <p>
-    Doa restu Bapak/Ibu/Saudara/i adalah hadiah terindah bagi kami.
-    Apabila berkenan memberikan tanda kasih, dapat disampaikan melalui:
+    Doa restu merupakan hadiah terindah bagi kami.
+    Apabila berkenan memberikan tanda kasih:
   </p>
   <p><b>BRI</b><br>0164-01-069928-50-2<br>a.n Endang Aprilawati</p>
-  <button class="copy-btn" onclick="copyRek()">Salin Nomor Rekening</button>
+  <button class="btn" onclick="navigator.clipboard.writeText('016401069928502')">Salin Nomor</button>
 </section>
 
+<!-- BUKU TAMU -->
 <section class="reveal">
-  <p>
-    Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i,
-    kami ucapkan terima kasih.
-  </p>
-  <p>Wassalamu’alaikum Warahmatullahi Wabarakatuh</p>
+  <h2>Buku Tamu</h2>
+  <input placeholder="Nama">
+  <select>
+    <option>InsyaAllah Hadir</option>
+    <option>Belum Bisa Hadir</option>
+  </select>
+  <textarea placeholder="Pesan & doa"></textarea>
+  <button class="btn">Kirim</button>
 </section>
 
-<footer>🤍 Terima kasih atas doa & kehadirannya 🤍</footer>
-</div>
+<footer style="padding:40px 20px;color:#ccc">
+  Terima kasih atas doa & kehadiran 🤍
+</footer>
 
 <script>
-function openInvite(){
-  document.getElementById('cover').classList.add('hide');
-  document.getElementById('content').style.display='block';
-  document.getElementById('bgm').play();
+const target=new Date("2026-01-25T08:30:00").getTime();
+setInterval(()=>{
+  const d=target-new Date().getTime();
+  if(d<0)return;
+  document.getElementById('countdown').innerHTML=`
+  <div class="time"><span>${Math.floor(d/86400000)}</span>Hari</div>
+  <div class="time"><span>${Math.floor(d%86400000/3600000)}</span>Jam</div>
+  <div class="time"><span>${Math.floor(d%3600000/60000)}</span>Menit</div>
+  <div class="time"><span>${Math.floor(d%60000/1000)}</span>Detik</div>`;
+},1000);
 
-  document.querySelectorAll('.reveal').forEach((el,i)=>{
-    setTimeout(()=>el.classList.add('show'),i*200);
-  });
-}
-
-function copyRek(){
-  navigator.clipboard.writeText("016401069928502");
-  alert("Nomor rekening berhasil disalin 🤍");
-}
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add('show'))
+});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 
 </body>
