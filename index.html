@@ -96,6 +96,9 @@ section{
 }
 .reveal{opacity:0;transform:translateY(60px);transition:1.2s}
 .reveal.show{opacity:1;transform:none}
+  .card{
+  backdrop-filter:blur(1.5px);
+  }
 
 .card p{
   font-family:'Cormorant Garamond',serif;
@@ -269,14 +272,25 @@ input,select,textarea{
 .gold{
   position:fixed;
   top:-10px;
-  width:6px;height:6px;
-  background:#ffd700;
+  width:3px;
+  height:3px;
+  background:rgba(255,215,0,.75);
   border-radius:50%;
+  filter:blur(.3px);
+  pointer-events:none;
   animation:fall linear infinite;
 }
-@keyframes fall{to{transform:translateY(120vh)}}
-</style>
-</head>
+@keyframes fall{
+  0%{
+    transform:translateY(-10px);
+    opacity:0;
+  }
+  10%{opacity:.8}
+  100%{
+    transform:translateY(120vh);
+    opacity:0;
+  }
+}
 
 <body>
 
@@ -430,14 +444,17 @@ input,select,textarea{
 <script>
 window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),1500));
 
-for(let i=0;i<45;i++){
- let g=document.createElement('div');
- g.className='gold';
- g.style.left=Math.random()*100+'vw';
- g.style.animationDuration=(5+Math.random()*6)+'s';
- document.body.appendChild(g);
+<script>
+for(let i=0;i<55;i++){
+  let g=document.createElement('div');
+  g.className='gold';
+  g.style.left=Math.random()*100+'vw';
+  g.style.animationDuration=(8+Math.random()*10)+'s';
+  g.style.animationDelay=Math.random()*5+'s';
+  g.style.width=g.style.height=(2+Math.random()*3)+'px';
+  document.body.appendChild(g);
 }
-
+  
 function openInvite(){
  cover.style.display='none';
  content.style.display='block';
