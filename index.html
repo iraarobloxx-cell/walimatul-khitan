@@ -1,103 +1,182 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Walimatul Khitan Dzaky & Dzikri</title>  <!-- Google Font -->  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f7f3ee;
-      color: #4a3b2a;
-    }
-    section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-    }
-    .cover {
-      background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url('https://i.imgur.com/0Z8FQhC.jpg');
-      background-size: cover;
-      background-position: center;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .btn {
-      padding: 12px 30px;
-      background: #8b6b3d;
-      color: #fff;
-      border-radius: 30px;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 20px;
-    }
-    .box {
-      background: #fff;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 700px;
-      margin: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,.1);
-    }
-    iframe {
-      width: 100%;
-      height: 300px;
-      border-radius: 15px;
-      border: none;
-    }
-    footer {
-      padding: 40px 20px;
-      background: #3e2f1c;
-      color: #fff;
-      text-align: center;
-    }
-  </style></head>
-<body><!-- Cover --><section class="cover">
-  <h1>Walimatul Khitan</h1>
-  <h2>Dzaky & Dzikri</h2>
-  <p>Tasyakuran Khitanan</p>
-  <a href="#open" class="btn">Buka Undangan</a>  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5b4c8f98d2.mp3" type="audio/mpeg">
-  </audio>
-</section><!-- Opening --><section id="open">
-  <div class="box">
-    <p><strong>بسم الله الرحمن الرحيم</strong></p>
-    <p><strong>Assalamu’alaikum Warahmatullahi Wabarakatuh</strong></p>
-    <p>Dengan memohon Rahmat dan Ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk berkenan hadir serta memberikan doa restu pada acara Walimatul Khitan anak kami.</p>
-  </div>
-</section><!-- Profile --><section>
-  <div class="box">
-    <h3>RB. Dzaky Ferdiansyah S</h3>
-    <p>Putra Bapak <b>Sudarman, Amd</b><br>Ibu <b>Endang Aprilawati, S.Tr.Keb</b></p>
-    <hr>
-    <h3>RB. Dzikri Athar Alfariq</h3>
-    <p>Putra Bapak <b>Sudarman, Amd</b><br>Ibu <b>Endang Aprilawati, S.Tr.Keb</b></p>
-  </div>
-</section><!-- Event --><section>
-  <div class="box">
-    <h2>Detail Acara</h2>
-    <p><b>Minggu, 25 Januari 2026</b></p>
-    <p>Pukul 08.30 WIB – Selesai</p>
-    <p>Gedung Pertemuan Prumnas Griya Anugerah</p>
-  </div>
-</section><!-- Map --><section>
-  <div class="box">
-    <h2>Lokasi Acara</h2>
-    <iframe src="https://www.google.com/maps?q=Gedung+Pertemuan+Prumnas+Griya+Anugerah&output=embed"></iframe>
-  </div>
-</section><!-- Gift --><section>
-  <div class="box">
-    <h2>Walimatul Khitan Gift</h2>
-    <p>Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Apabila berkenan memberikan tanda kasih:</p>
-    <p><b>BRI</b><br>0164-01-069928-50-2<br>a.n Endang Aprilawati</p>
-  </div>
-</section><footer>
-  <p>Wassalamu’alaikum Warahmatullahi Wabarakatuh</p>
-  <p>Keluarga Bapak Sudarman, Amd & Ibu Endang Aprilawati, S.Tr.Keb</p>
-</footer></body>
-</html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walimatul Khitan Dzaky & Dzikri</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+  text-align:center;
+}
+section{padding:60px 20px}
+h1,h2,h3{font-family:'Playfair Display',serif}
+h2{color:#d4af37;margin-bottom:20px}
+p{color:#ddd;line-height:1.7}
+/* COVER */
+.hero{
+  min-height:100vh;
+  background:url('cover.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:fixed;
+  inset:0;
+  z-index:10;
+}
+.hero::after{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.65);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+.hero h1{font-size:38px}
+.hero h3{margin-top:10px;font-weight:300}
+.btn{
+  margin-top:25px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:#d4af37;
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+}
+/* SEMBUNYIKAN ISI */
+#content{display:none}
+/* PROFIL */
+.profile{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+  max-width:900px;
+  margin:auto;
+}
+.card{
+  background:#1a1a1a;
+  border-radius:16px;
+  padding:20px;
+}
+.card img{
+  width:100%;
+  border-radius:12px;
+}
+.name{color:#d4af37;margin-top:15px}
+/* COUNTDOWN */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+.time{
+  background:#1f1f1f;
+  padding:15px;
+  border-radius:12px;
+  min-width:70px;
+}
+/* GALERI */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:15px;
+}
+.gallery img{
+  width:100%;
+  border-radius:12px;
+}
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+}
+footer{
+  padding:30px;
+  font-size:14px;
+  color:#aaa;
+}
+</style>
+</head>
+<body>
+<!-- MUSIK (DIKONTROL JS) -->
+<audio id="bgm" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_6f4b7e6db6.mp3" type="audio/mpeg">
+</audio>
+<!-- COVER -->
+<section class="hero" id="cover">
+  <div class="hero-content">
+    <h1>Walimatul Khitan</h1>
+    <h2>Dzaky & Dzikri</h2>
+    <h3>Tasyakuran Khitanan</h3>
+    <button class="btn" onclick="openInvitation()">Buka Undangan</button>
+  </div>
+</section>
+<!-- ISI UNDANGAN -->
+<div id="content">
+<section>
+  <h2>Putra Kami</h2>
+  <div class="profile">
+    <div class="card">
+      <img src="dzaky.jpg">
+      <h3 class="name">RB. Dzaky Ferdiansyah S</h3>
+      <p>Putra Pertama<br>
+      Bapak Sudarman, Amd<br>
+      & Ibu <b>Endang</b> Aprilawati, S.Tr.Keb</p>
+    </div>
+    <div class="card">
+      <img src="dzikri.jpg">
+      <h3 class="name">RB. Dzikri Athar Alfariq</h3>
+      <p>Putra Kedua<br>
+      Bapak Sudarman, Amd<br>
+      & Ibu <b>Endang</b> Aprilawati, S.Tr.Keb</p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Detail Acara</h2>
+  <p>
+    Minggu, 25 Januari 2026<br>
+    Pukul 08.30 WIB – Selesai<br><br>
+    Gedung Pertemuan Prumnas Griya Anugerah
+  </p>
+  <a href="https://share.google/bKlbOUmIBcc99MSxQ"
+     target="_blank"
+     class="btn"
+     style="display:inline-block;margin-top:20px;">
+     📍 Lihat Lokasi di Google Maps
+  </a>
+</section>
+<section>
+  <h2>Hitung Mundur Acara</h2>
+  <div class="countdown" id="countdown"></div>
+</section>
+<section>
+  <h2>Kenangan</h2>
+  <div class="gallery">
+    <img src="kenangan1.jpg">
+    <img src="kenangan2.jpg">
+    <img src="kenangan3.jpg">
+    <img src="kenangan4.jpg">
+    <img src="kenangan5.jpg">
+    <img src="kenangan6.jpg">
+  </div>
+</section>
+<section>
+  <h2>Gift</h2>
+  <p>
+    BRI<br>
+    0164-01-069928-50-2<br>
+    a.n Endang Aprilawati
+  </p>
+</section>
+<section>
+  <h2>Buku Tamu & Doa</h2>
+  <inp
