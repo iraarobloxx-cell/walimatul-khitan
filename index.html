@@ -122,65 +122,70 @@ section{
   100%{transform:translateY(0)}
 }
 
-/* ===== WAYANG PEMBUKA ===== */
+/* ================= WAYANG PEMBUKA ================= */
 .wayang{
   position:absolute;
-  bottom:25px;
-  width:200px;
-  opacity:.45;
+  bottom:30px;
+  width:190px;
+  opacity:0;
   pointer-events:none;
-  animation:wayangGlow 6s ease-in-out infinite;
+  transition:1.5s ease;
 }
 
-/* KIRI: MENGHADAP KANAN */
+/* kiri menghadap kanan */
 .wayang.left{
-  left:-40px;                 /* DIJAUHIN DARI TEKS */
-  transform:scaleX(-1);
-  animation:
-    wayangFloat 7s ease-in-out infinite,
-    wayangGlow 6s ease-in-out infinite;
+  left:70px;
+  transform:translateY(25px) scaleX(-1);
 }
 
-/* KANAN: MENGHADAP KIRI */
+/* kanan menghadap kiri */
 .wayang.right{
-  right:-40px;                /* DIJAUHIN DARI TEKS */
-  animation:
-    wayangFloat 8s ease-in-out infinite,
-    wayangGlow 6s ease-in-out infinite;
+  right:70px;
+  transform:translateY(25px);
 }
 
-/* GERAK HALUS SAJA (TIDAK MUTER) */
-@keyframes wayangFloat{
-  0%{transform:translateY(0) scaleX(var(--flip,1))}
-  50%{transform:translateY(-10px) scaleX(var(--flip,1))}
-  100%{transform:translateY(0) scaleX(var(--flip,1))}
+.wayang.show{
+  opacity:.55;
+  transform:translateY(0) scaleX(var(--flip,1));
 }
 
-/* ===== WAYANG PROFIL (SIMETRIS & JAUH) ===== */
+/* ================= WAYANG PROFIL ================= */
+.profile-box{
+  border:1px solid rgba(212,175,55,.5);
+  border-radius:30px;
+  padding:30px;
+  margin-bottom:55px;
+  background:rgba(0,0,0,.25);
+}
+.profile-box img{
+  width:100%;
+  border-radius:22px;
+  margin-bottom:20px;
+}
+
 .profile-wayang{
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
   margin-top:40px;
-  padding:0 20px;             /* JAGA JARAK DENGAN FOTO */
+  padding:0 45px;
 }
-
 .profile-wayang img{
-  width:180px;                /* BESAR TAPI AMAN */
-  opacity:.5;
+  width:190px;
+  opacity:0;
+  transition:1.5s ease;
 }
-
-/* KIRI PROFIL – HADAP KANAN */
 .profile-wayang img:first-child{
-  transform:scaleX(-1);
+  transform:translateY(25px) scaleX(-1);
 }
-
-/* FOTO PROFIL TIDAK TERPENGARUH */
-.profile-box img{
-  max-width:100%;
-  height:auto;
-    }
-
+.profile-wayang img:last-child{
+  transform:translateY(25px);
+}
+.profile-wayang img.show{
+  opacity:.6;
+  transform:translateY(0) scaleX(var(--flip,1));
+}
+  
 /* GALLERY */
 .gallery{
   display:grid;
