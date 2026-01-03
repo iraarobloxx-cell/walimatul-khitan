@@ -122,83 +122,64 @@ section{
   100%{transform:translateY(0)}
 }
 
-/* =====================================
-   WAYANG PREMIUM – HALUS & BERHADAPAN
-   (KHUSUS KODE INI – AMAN)
-===================================== */
-
-/* ANIMASI MENGAMBANG HALUS */
-@keyframes wayangFloatLeft {
-  0%   { transform:translateY(0) scaleX(-1); }
-  50%  { transform:translateY(-12px) scaleX(-1); }
-  100% { transform:translateY(0) scaleX(-1); }
-}
-
-@keyframes wayangFloatRight {
-  0%   { transform:translateY(-6px); }
-  50%  { transform:translateY(10px); }
-  100% { transform:translateY(-6px); }
-}
-
-/* GLOW EMAS LEMBUT */
-@keyframes wayangGlow {
-  0%   { filter:drop-shadow(0 0 6px rgba(212,175,55,.25)); }
-  50%  { filter:drop-shadow(0 0 16px rgba(212,175,55,.45)); }
-  100% { filter:drop-shadow(0 0 6px rgba(212,175,55,.25)); }
-}
-
 /* ===== WAYANG PEMBUKA ===== */
 .wayang{
   position:absolute;
-  bottom:20px;
-  width:220px;              /* LEBIH BESAR */
-  opacity:.5;
+  bottom:25px;
+  width:200px;
+  opacity:.45;
   pointer-events:none;
   animation:wayangGlow 6s ease-in-out infinite;
 }
 
+/* KIRI: MENGHADAP KANAN */
 .wayang.left{
-  left:20px;
+  left:-40px;                 /* DIJAUHIN DARI TEKS */
+  transform:scaleX(-1);
   animation:
-    wayangFloatLeft 7s ease-in-out infinite,
+    wayangFloat 7s ease-in-out infinite,
     wayangGlow 6s ease-in-out infinite;
 }
 
+/* KANAN: MENGHADAP KIRI */
 .wayang.right{
-  right:20px;
+  right:-40px;                /* DIJAUHIN DARI TEKS */
   animation:
-    wayangFloatRight 8s ease-in-out infinite,
+    wayangFloat 8s ease-in-out infinite,
     wayangGlow 6s ease-in-out infinite;
 }
 
-/* ===== WAYANG PROFIL (SIMETRIS & BERHADAPAN) ===== */
+/* GERAK HALUS SAJA (TIDAK MUTER) */
+@keyframes wayangFloat{
+  0%{transform:translateY(0) scaleX(var(--flip,1))}
+  50%{transform:translateY(-10px) scaleX(var(--flip,1))}
+  100%{transform:translateY(0) scaleX(var(--flip,1))}
+}
+
+/* ===== WAYANG PROFIL (SIMETRIS & JAUH) ===== */
 .profile-wayang{
-  position:relative;
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
-  margin-top:30px;
-  height:190px;
+  margin-top:40px;
+  padding:0 20px;             /* JAGA JARAK DENGAN FOTO */
 }
 
 .profile-wayang img{
-  width:200px;              /* DIBESARKAN */
-  opacity:.55;
-  animation:wayangGlow 6s ease-in-out infinite;
+  width:180px;                /* BESAR TAPI AMAN */
+  opacity:.5;
 }
 
+/* KIRI PROFIL – HADAP KANAN */
 .profile-wayang img:first-child{
   transform:scaleX(-1);
-  animation:
-    wayangFloatLeft 8s ease-in-out infinite,
-    wayangGlow 6s ease-in-out infinite;
 }
 
-.profile-wayang img:last-child{
-  animation:
-    wayangFloatRight 9s ease-in-out infinite,
-    wayangGlow 6s ease-in-out infinite;
-}
+/* FOTO PROFIL TIDAK TERPENGARUH */
+.profile-box img{
+  max-width:100%;
+  height:auto;
+    }
 
 /* GALLERY */
 .gallery{
