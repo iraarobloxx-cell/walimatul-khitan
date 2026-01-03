@@ -1,283 +1,283 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walimatul Khitan Dzaky & Dzikri</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Poppins',sans-serif;
-  background:url('bg-flower.png') center top / contain repeat-y;
-  color:#fff;
-  text-align:center;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:-1;
-}
-
-/* ===== KUNCI TOTAL LAYAR (ANTI GESER KANAN) ===== */
-html, body {
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden !important;
-}
-
-/* Semua section aman di viewport */
-section, .card, #content {
-  max-width:100vw;
-  overflow-x:hidden;
-}
-
-/* Elemen absolute tidak boleh bikin layar melebar */
-.wayang,
-.profile-wayang img,
-.gold {
-  max-width:100%;
-}  
-
-/* LOADER */
-#loader{
-  position:fixed;inset:0;
-  background:#0b0b0b;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-#loader.hide{opacity:0;visibility:hidden;transition:1s}
-.loader-ring{
-  width:90px;height:90px;
-  border:4px solid rgba(212,175,55,.25);
-  border-top:4px solid #d4af37;
-  border-radius:50%;
-  animation:spin 1.2s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* EMBUN */
-.fog{
-  position:fixed;inset:0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(255,255,255,.06), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,.05), transparent 45%);
-  pointer-events:none;
-  animation:fog 10s ease-in-out infinite alternate;
-}
-@keyframes fog{from{opacity:.3}to{opacity:.6}}
-
-h1,h2,h3{
-  font-family:'Playfair Display',serif;
-  color:#d4af37;
-}
-section{
-  padding:110px 22px;
-  max-width:900px;
-  margin:auto;
-  position:relative;
-}
-.card{
-  background:rgba(0,0,0,.35);
-  border-radius:34px;
-  padding:42px 28px;
-  margin-bottom:90px;
-  backdrop-filter:blur(1.5px);
-  border:1.5px solid rgba(212,175,55,.45);
-}
-.reveal{opacity:0;transform:translateY(60px);transition:1.2s}
-.reveal.show{opacity:1;transform:none}
-
-.card p{
-  font-family:'Cormorant Garamond',serif;
-  font-size:19px;
-  line-height:1.95;
-  margin-top:18px;
-}
-
-.btn{
-  background:#d4af37;
-  color:#000;
-  padding:15px 40px;
-  border-radius:40px;
-  border:none;
-  font-weight:600;
-  margin-top:45px;
-}
-
-/* COVER */
-#cover{
-  height:100vh;
-  background:
-    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
-    url('cover.jpg') center/cover;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-#cover .inner{
-  background:rgba(0,0,0,.45);
-  padding:55px;
-  border-radius:40px;
-}
-
-/* FLOWER */
-.flower{
-  width:90px;
-  margin:0 auto 25px;
-  animation:float 6s ease-in-out infinite;
-}
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(14px)}
-  100%{transform:translateY(0)}
-}
-
-/* ================= WAYANG PEMBUKA ================= */
-.wayang{
-  position:absolute;
-  bottom:30px;
-  width:190px;
-  opacity:0;
-  pointer-events:none;
-  transition:1.5s ease;
-}
-
-/* kiri menghadap kanan */
-.wayang.left{
-  left:70px;
-  transform:translateY(25px) scaleX(-1);
-}
-
-/* kanan menghadap kiri */
-.wayang.right{
-  right:70px;
-  transform:translateY(25px);
-}
-
-.wayang.show{
-  opacity:.55;
-  transform:translateY(0) scaleX(var(--flip,1));
-}
-
-/* ================= WAYANG PROFIL ================= */
-.profile-box{
-  border:1px solid rgba(212,175,55,.5);
-  border-radius:30px;
-  padding:30px;
-  margin-bottom:55px;
-  background:rgba(0,0,0,.25);
-}
-.profile-box img{
-  width:100%;
-  border-radius:22px;
-  margin-bottom:20px;
-}
-
-.profile-wayang{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  margin-top:40px;
-  padding:0 45px;
-}
-.profile-wayang img{
-  width:190px;
-  opacity:0;
-  transition:1.5s ease;
-}
-.profile-wayang img:first-child{
-  transform:translateY(25px) scaleX(-1);
-}
-.profile-wayang img:last-child{
-  transform:translateY(25px);
-}
-.profile-wayang img.show{
-  opacity:.6;
-  transform:translateY(0) scaleX(var(--flip,1));
-}
-  
-/* GALLERY */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-.gallery img{
-  width:100%;
-  border-radius:22px;
-  box-shadow:0 12px 30px rgba(0,0,0,.5);
-}
-
-/* WAKTU */
-.info-line{
-  margin:14px 0;
-  font-size:20px;
-  line-height:1.6;
-}
-
-/* COUNTDOWN */
-.countdown-wrap{
-  margin-top:45px;
-}
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:22px;
-  flex-wrap:wrap;
-}
-.cd{
-  background:rgba(0,0,0,.55);
-  padding:22px 26px;
-  border-radius:22px;
-  min-width:95px;
-}
-.cd span{
-  display:block;
-  font-size:30px;
-  color:#d4af37;
-  font-weight:bold;
-}
-
-/* FORM */
-input,select,textarea{
-  width:100%;
-  padding:15px;
-  border-radius:16px;
-  border:none;
-  margin-top:15px;
-}
-.comment{
-  background:rgba(255,255,255,.1);
-  border-left:3px solid #d4af37;
-  border-radius:16px;
-  padding:14px;
-  margin-top:14px;
-  text-align:left;
-}
-
-/* PARTICLE */
-.gold{
+‎<!DOCTYPE html>
+‎<html lang="id">
+‎<head>
+‎<meta charset="UTF-8">
+‎<meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎<title>Walimatul Khitan Dzaky & Dzikri</title>
+‎
+‎<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+‎
+‎<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+‎<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+‎
+‎<style>
+‎*{margin:0;padding:0;box-sizing:border-box}
+‎html{scroll-behavior:smooth}
+‎body{
+‎  font-family:'Poppins',sans-serif;
+‎  background:url('bg-flower.png') center top / contain repeat-y;
+‎  color:#fff;
+‎  text-align:center;
+‎  overflow-x:hidden;
+‎}
+‎body::before{
+‎  content:'';
+‎  position:fixed;inset:0;
+‎  background:rgba(0,0,0,.55);
+‎  z-index:-1;
+‎}
+‎
+‎/* ===== KUNCI TOTAL LAYAR (ANTI GESER KANAN) ===== */
+‎html, body {
+‎  width:100%;
+‎  max-width:100%;
+‎  overflow-x:hidden !important;
+‎}
+‎
+‎/* Semua section aman di viewport */
+‎section, .card, #content {
+‎  max-width:100vw;
+‎  overflow-x:hidden;
+‎}
+‎
+‎/* Elemen absolute tidak boleh bikin layar melebar */
+‎.wayang,
+‎.profile-wayang img,
+‎.gold {
+‎  max-width:100%;
+‎}  
+‎
+‎/* LOADER */
+‎#loader{
+‎  position:fixed;inset:0;
+‎  background:#0b0b0b;
+‎  z-index:9999;
+‎  display:flex;
+‎  align-items:center;
+‎  justify-content:center;
+‎}
+‎#loader.hide{opacity:0;visibility:hidden;transition:1s}
+‎.loader-ring{
+‎  width:90px;height:90px;
+‎  border:4px solid rgba(212,175,55,.25);
+‎  border-top:4px solid #d4af37;
+‎  border-radius:50%;
+‎  animation:spin 1.2s linear infinite;
+‎}
+‎@keyframes spin{to{transform:rotate(360deg)}}
+‎
+‎/* EMBUN */
+‎.fog{
+‎  position:fixed;inset:0;
+‎  background:
+‎    radial-gradient(circle at 30% 40%, rgba(255,255,255,.06), transparent 40%),
+‎    radial-gradient(circle at 70% 60%, rgba(255,255,255,.05), transparent 45%);
+‎  pointer-events:none;
+‎  animation:fog 10s ease-in-out infinite alternate;
+‎}
+‎@keyframes fog{from{opacity:.3}to{opacity:.6}}
+‎
+‎h1,h2,h3{
+‎  font-family:'Playfair Display',serif;
+‎  color:#d4af37;
+‎}
+‎section{
+‎  padding:110px 22px;
+‎  max-width:900px;
+‎  margin:auto;
+‎  position:relative;
+‎}
+‎.card{
+‎  background:rgba(0,0,0,.35);
+‎  border-radius:34px;
+‎  padding:42px 28px;
+‎  margin-bottom:90px;
+‎  border:1.5px solid rgba(212,175,55,.45);
+‎}
+‎.reveal{opacity:0;transform:translateY(60px);transition:1.2s}
+‎.reveal.show{opacity:1;transform:none}
+‎
+‎.card p{
+‎  font-family:'Cormorant Garamond',serif;
+‎  font-size:19px;
+‎  line-height:1.95;
+‎  margin-top:18px;
+‎}
+‎
+‎.btn{
+‎  background:#d4af37;
+‎  color:#000;
+‎  padding:15px 40px;
+‎  border-radius:40px;
+‎  border:none;
+‎  font-weight:600;
+‎  margin-top:45px;
+‎}
+‎
+‎/* COVER */
+‎#cover{
+‎  height:100vh;
+‎  background:
+‎    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
+‎    url('cover.jpg') center/cover;
+‎  display:flex;
+‎  align-items:center;
+‎  justify-content:center;
+‎}
+‎#cover .inner{
+‎  background:rgba(0,0,0,.45);
+‎  padding:55px;
+‎  border-radius:40px;
+‎}
+‎
+‎/* FLOWER */
+‎.flower{
+‎  width:90px;
+‎  margin:0 auto 25px;
+‎  animation:float 6s ease-in-out infinite;
+‎}
+‎@keyframes float{
+‎  0%{transform:translateY(0)}
+‎  50%{transform:translateY(14px)}
+‎  100%{transform:translateY(0)}
+‎}
+‎
+‎/* ================= WAYANG PEMBUKA ================= */
+‎.wayang{
+‎  position:absolute;
+‎  bottom:30px;
+‎  width:190px;
+‎  opacity:0;
+‎  pointer-events:none;
+‎  transition:1.5s ease;
+‎}
+‎
+‎/* kiri menghadap kanan */
+‎.wayang.left{
+‎  left:70px;
+‎  transform:translateY(25px) scaleX(-1);
+‎}
+‎
+‎/* kanan menghadap kiri */
+‎.wayang.right{
+‎  right:70px;
+‎  transform:translateY(25px);
+‎}
+‎
+‎.wayang.show{
+‎  opacity:.55;
+‎  transform:translateY(0) scaleX(var(--flip,1));
+‎}
+‎
+‎/* ================= WAYANG PROFIL ================= */
+‎.profile-box{
+‎  border:1px solid rgba(212,175,55,.5);
+‎  border-radius:30px;
+‎  padding:30px;
+‎  margin-bottom:55px;
+‎  background:rgba(0,0,0,.25);
+‎}
+‎.profile-box img{
+‎  width:100%;
+‎  border-radius:22px;
+‎  margin-bottom:20px;
+‎}
+‎
+‎.profile-wayang{
+‎  display:flex;
+‎  justify-content:space-between;
+‎  align-items:flex-end;
+‎  margin-top:40px;
+‎  padding:0 45px;
+‎}
+‎.profile-wayang img{
+‎  width:190px;
+‎  opacity:0;
+‎  transition:1.5s ease;
+‎}
+‎.profile-wayang img:first-child{
+‎  transform:translateY(25px) scaleX(-1);
+‎}
+‎.profile-wayang img:last-child{
+‎  transform:translateY(25px);
+‎}
+‎.profile-wayang img.show{
+‎  opacity:.6;
+‎  transform:translateY(0) scaleX(var(--flip,1));
+‎}
+‎  
+‎/* GALLERY */
+‎.gallery{
+‎  display:grid;
+‎  grid-template-columns:repeat(2,1fr);
+‎  gap:18px;
+‎}
+‎.gallery img{
+‎  width:100%;
+‎  border-radius:22px;
+‎  box-shadow:0 12px 30px rgba(0,0,0,.5);
+‎}
+‎
+‎/* WAKTU */
+‎.info-line{
+‎  margin:14px 0;
+‎  font-size:20px;
+‎  line-height:1.6;
+‎}
+‎
+‎/* COUNTDOWN */
+‎.countdown-wrap{
+‎  margin-top:45px;
+‎}
+‎.countdown{
+‎  display:flex;
+‎  justify-content:center;
+‎  gap:22px;
+‎  flex-wrap:wrap;
+‎}
+‎.cd{
+‎  background:rgba(0,0,0,.55);
+‎  padding:22px 26px;
+‎  border-radius:22px;
+‎  min-width:95px;
+‎}
+‎.cd span{
+‎  display:block;
+‎  font-size:30px;
+‎  color:#d4af37;
+‎  font-weight:bold;
+‎}
+‎
+‎/* FORM */
+‎input,select,textarea{
+‎  width:100%;
+‎  padding:15px;
+‎  border-radius:16px;
+‎  border:none;
+‎  margin-top:15px;
+‎}
+‎.comment{
+‎  background:rgba(255,255,255,.1);
+‎  border-left:3px solid #d4af37;
+‎  border-radius:16px;
+‎  padding:14px;
+‎  margin-top:14px;
+‎  text-align:left;
+‎}
+‎
+‎/* PARTICLE */
+‎.gold{
   position:fixed;
   top:-10px;
   width:3px;
   height:3px;
   background:rgba(255,215,0,.75);
   border-radius:50%;
-  filter:blur(.3px);
+  filter:blur(.4px);
   pointer-events:none;
   animation:fall linear infinite;
 }
+
 @keyframes fall{
   0%{
     transform:translateY(-10px);
@@ -289,189 +289,193 @@ input,select,textarea{
     opacity:0;
   }
 }
+</style>
+</head>
+
+<body>
   
-<div id="loader"><div class="loader-ring"></div></div>
-<div class="fog"></div>
-
-<audio id="music" src="lagu.mp3" loop></audio>
-
-<section id="cover">
-  <div class="inner">
-    <h1>Walimatul Khitan</h1>
-    <h2>Dzaky & Dzikri</h2>
-    <p>Tasyakuran Khitanan</p>
-    <button class="btn" onclick="openInvite()">Buka Undangan</button>
-  </div>
-</section>
-
-<div id="content" style="display:none">
-
-<!-- PEMBUKA -->
-<section class="card reveal">
-  <img src="flower.png" class="flower">
-  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
-  <p>
-    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
-    Dengan memohon rahmat dan ridho Allah SWT,
-    kami bermaksud mengundang Bapak/Ibu/Saudara/i
-    untuk menghadiri acara Walimatul Khitan putra kami tercinta.
-  </p>
-  <img src="wayang.png" class="wayang left">
-  <img src="wayang.png" class="wayang right">
-</section>
-
-<!-- PROFIL ANAK -->
-<section class="card reveal">
-  <h2>Putra Kami</h2>
-
-  <div class="profile-box">
-    <img src="dzaky.jpg">
-    <h3>RB. Dzaky Ferdiansyah S</h3>
-    <p>
-      Putra Pertama<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu Endang Aprilawati, S.Tr.Keb
-    </p>
-    <div class="profile-wayang">
-      <img src="wayang.png"><img src="wayang.png">
-    </div>
-  </div>
-
-  <div class="profile-box">
-    <img src="dzikri.jpg">
-    <h3>RB. Dzikri Athar Alfariq</h3>
-    <p>
-      Putra Kedua<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu Endang Aprilawati, S.Tr.Keb
-    </p>
-    <div class="profile-wayang">
-      <img src="wayang.png"><img src="wayang.png">
-    </div>
-  </div>
-</section>
-
-<!-- WAKTU -->
-<section class="card reveal">
-  <h2>Waktu & Tempat</h2>
-  <div class="info-line">📅 Minggu, 25 Januari 2026</div>
-  <div class="info-line">⏰ Pukul 08.30 WIB – Selesai</div>
-  <div class="info-line">📍 Gedung Pertemuan Prumnas Griya Anugerah</div>
-
-  <a class="btn"
-     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah"
-     target="_blank">Buka Google Maps</a>
-</section>
-
-<!-- COUNTDOWN -->
-<section class="card reveal">
-  <h2>Menuju Hari Bahagia</h2>
-  <p>
-    Hitung mundur menuju hari pelaksanaan
-    Walimatul Khitan Dzaky & Dzikri
-    yang InsyaAllah penuh keberkahan.
-  </p>
-  <div class="countdown-wrap">
-    <div class="countdown">
-      <div class="cd"><span id="d">0</span>Hari</div>
-      <div class="cd"><span id="h">0</span>Jam</div>
-      <div class="cd"><span id="m">0</span>Menit</div>
-      <div class="cd"><span id="s">0</span>Detik</div>
-    </div>
-  </div>
-</section>
-
-<!-- KENANGAN -->
-<section class="card reveal">
-  <h2>Kenangan</h2>
-  <p>
-    Setiap langkah kecil, tawa, dan kebersamaan
-    akan selalu kami simpan sebagai kenangan indah
-    yang terukir dalam doa dan hati kami.
-  </p>
-  <div class="gallery">
-    <img src="kenangan1.jpg">
-    <img src="kenangan2.jpg">
-    <img src="kenangan3.jpg">
-    <img src="kenangan4.jpg">
-    <img src="kenangan5.jpg">
-    <img src="kenangan6.jpg">
-  </div>
-</section>
-
-<!-- GIFT -->
-<section class="card reveal">
-  <h2>Gift</h2>
-  <p>
-    Doa restu Bapak/Ibu/Saudara/i merupakan hadiah
-    terindah bagi kami. Apabila berkenan memberikan
-    tanda kasih, dapat disampaikan melalui:
-  </p>
-  <p>
-    BRI<br>
-    0164-01-069928-50-2<br>
-    a.n Endang Aprilawati
-  </p>
-  <button class="btn"
-    onclick="navigator.clipboard.writeText('016401069928502')">
-    Salin Nomor Rekening
-  </button>
-</section>
-
-<!-- BUKU TAMU -->
-<section class="card reveal">
-  <h2>Buku Tamu</h2>
-  <p>
-    Silakan konfirmasi kehadiran serta titipkan
-    pesan dan doa terbaik untuk putra kami.
-  </p>
-  <input id="nama" placeholder="Nama">
-  <select id="status">
-    <option>InsyaAllah Hadir</option>
-    <option>Tidak Bisa Hadir</option>
-  </select>
-  <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
-  <button class="btn" onclick="kirim()">Kirim</button>
-  <div id="list"></div>
-</section>
-
-</div>
-
-<script>
-window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),1500));
-
-<script>
+‎<div id="loader"><div class="loader-ring"></div></div>
+‎<div class="fog"></div>
+‎
+‎<audio id="music" src="lagu.mp3" loop></audio>
+‎
+‎<section id="cover">
+‎  <div class="inner">
+‎    <h1>Walimatul Khitan</h1>
+‎    <h2>Dzaky & Dzikri</h2>
+‎    <p>Tasyakuran Khitanan</p>
+‎    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+‎  </div>
+‎</section>
+‎
+‎<div id="content" style="display:none">
+‎
+‎<!-- PEMBUKA -->
+‎<section class="card reveal">
+‎  <img src="flower.png" class="flower">
+‎  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
+‎  <p>
+‎    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
+‎    Dengan memohon rahmat dan ridho Allah SWT,
+‎    kami bermaksud mengundang Bapak/Ibu/Saudara/i
+‎    untuk menghadiri acara Walimatul Khitan putra kami tercinta.
+‎  </p>
+‎  <img src="wayang.png" class="wayang left">
+‎  <img src="wayang.png" class="wayang right">
+‎</section>
+‎
+‎<!-- PROFIL ANAK -->
+‎<section class="card reveal">
+‎  <h2>Putra Kami</h2>
+‎
+‎  <div class="profile-box">
+‎    <img src="dzaky.jpg">
+‎    <h3>RB. Dzaky Ferdiansyah S</h3>
+‎    <p>
+‎      Putra Pertama<br>
+‎      Bapak Sudarman, Amd<br>
+‎      & Ibu Endang Aprilawati, S.Tr.Keb
+‎    </p>
+‎    <div class="profile-wayang">
+‎      <img src="wayang.png"><img src="wayang.png">
+‎    </div>
+‎  </div>
+‎
+‎  <div class="profile-box">
+‎    <img src="dzikri.jpg">
+‎    <h3>RB. Dzikri Athar Alfariq</h3>
+‎    <p>
+‎      Putra Kedua<br>
+‎      Bapak Sudarman, Amd<br>
+‎      & Ibu Endang Aprilawati, S.Tr.Keb
+‎    </p>
+‎    <div class="profile-wayang">
+‎      <img src="wayang.png"><img src="wayang.png">
+‎    </div>
+‎  </div>
+‎</section>
+‎
+‎<!-- WAKTU -->
+‎<section class="card reveal">
+‎  <h2>Waktu & Tempat</h2>
+‎  <div class="info-line">📅 Minggu, 25 Januari 2026</div>
+‎  <div class="info-line">⏰ Pukul 08.30 WIB – Selesai</div>
+‎  <div class="info-line">📍 Gedung Pertemuan Prumnas Griya Anugerah</div>
+‎
+‎  <a class="btn"
+‎     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah"
+‎     target="_blank">Buka Google Maps</a>
+‎</section>
+‎
+‎<!-- COUNTDOWN -->
+‎<section class="card reveal">
+‎  <h2>Menuju Hari Bahagia</h2>
+‎  <p>
+‎    Hitung mundur menuju hari pelaksanaan
+‎    Walimatul Khitan Dzaky & Dzikri
+‎    yang InsyaAllah penuh keberkahan.
+‎  </p>
+‎  <div class="countdown-wrap">
+‎    <div class="countdown">
+‎      <div class="cd"><span id="d">0</span>Hari</div>
+‎      <div class="cd"><span id="h">0</span>Jam</div>
+‎      <div class="cd"><span id="m">0</span>Menit</div>
+‎      <div class="cd"><span id="s">0</span>Detik</div>
+‎    </div>
+‎  </div>
+‎</section>
+‎
+‎<!-- KENANGAN -->
+‎<section class="card reveal">
+‎  <h2>Kenangan</h2>
+‎  <p>
+‎    Setiap langkah kecil, tawa, dan kebersamaan
+‎    akan selalu kami simpan sebagai kenangan indah
+‎    yang terukir dalam doa dan hati kami.
+‎  </p>
+‎  <div class="gallery">
+‎    <img src="kenangan1.jpg">
+‎    <img src="kenangan2.jpg">
+‎    <img src="kenangan3.jpg">
+‎    <img src="kenangan4.jpg">
+‎    <img src="kenangan5.jpg">
+‎    <img src="kenangan6.jpg">
+‎  </div>
+‎</section>
+‎
+‎<!-- GIFT -->
+‎<section class="card reveal">
+‎  <h2>Gift</h2>
+‎  <p>
+‎    Doa restu Bapak/Ibu/Saudara/i merupakan hadiah
+‎    terindah bagi kami. Apabila berkenan memberikan
+‎    tanda kasih, dapat disampaikan melalui:
+‎  </p>
+‎  <p>
+‎    BRI<br>
+‎    0164-01-069928-50-2<br>
+‎    a.n Endang Aprilawati
+‎  </p>
+‎  <button class="btn"
+‎    onclick="navigator.clipboard.writeText('016401069928502')">
+‎    Salin Nomor Rekening
+‎  </button>
+‎</section>
+‎
+‎<!-- BUKU TAMU -->
+‎<section class="card reveal">
+‎  <h2>Buku Tamu</h2>
+‎  <p>
+‎    Silakan konfirmasi kehadiran serta titipkan
+‎    pesan dan doa terbaik untuk putra kami.
+‎  </p>
+‎  <input id="nama" placeholder="Nama">
+‎  <select id="status">
+‎    <option>InsyaAllah Hadir</option>
+‎    <option>Tidak Bisa Hadir</option>
+‎  </select>
+‎  <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
+‎  <button class="btn" onclick="kirim()">Kirim</button>
+‎  <div id="list"></div>
+‎</section>
+‎
+‎</div>
+‎
+‎<script>
+‎window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),1500));
+‎
 for(let i=0;i<55;i++){
   let g=document.createElement('div');
   g.className='gold';
   g.style.left=Math.random()*100+'vw';
   g.style.animationDuration=(8+Math.random()*10)+'s';
-  g.style.animationDelay=Math.random()*5+'s';
-  g.style.width=g.style.height=(2+Math.random()*3)+'px';
+  g.style.animationDelay=Math.random()*6+'s';
+  g.style.width=g.style.height=(2+Math.random()*2)+'px';
   document.body.appendChild(g);
 }
-  
-function openInvite(){
- cover.style.display='none';
- content.style.display='block';
- music.play();
-}
-
-const obs=new IntersectionObserver(e=>{
- e.forEach(i=>i.isIntersecting&&i.target.classList.add('show'))
-},{threshold:.2});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-const target=new Date("2026-01-25T08:30:00").getTime();
-setInterval(()=>{
- let t=target-new Date().getTime();
- if(t<0)return;
- d.innerText=Math.floor(t/86400000);
- h.innerText=Math.floor(t%86400000/3600000);
- m.innerText=Math.floor(t%3600000/60000);
- s.innerText=Math.floor(t%60000/1000);
-},1000);
-</script>
-
-</body>
-</html>
+‎
+‎function openInvite(){
+‎ cover.style.display='none';
+‎ content.style.display='block';
+‎ music.play();
+‎}
+‎
+‎const obs=new IntersectionObserver(e=>{
+‎ e.forEach(i=>i.isIntersecting&&i.target.classList.add('show'))
+‎},{threshold:.2});
+‎document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+‎
+‎const target=new Date("2026-01-25T08:30:00").getTime();
+‎setInterval(()=>{
+‎ let t=target-new Date().getTime();
+‎ if(t<0)return;
+‎ d.innerText=Math.floor(t/86400000);
+‎ h.innerText=Math.floor(t%86400000/3600000);
+‎ m.innerText=Math.floor(t%3600000/60000);
+‎ s.innerText=Math.floor(t%60000/1000);
+‎},1000);
+‎</script>
+‎
+‎</body>
+‎</html>
+‎
