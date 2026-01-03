@@ -5,132 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walimatul Khitan Dzaky & Dzikri</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-
 body{
   font-family:'Poppins',sans-serif;
-  background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.7)),
-    url('bg-flower.png') center/cover fixed no-repeat;
+  background:url('bg-flower.png') center/cover fixed no-repeat;
   color:#fff;
-  text-align:center;
   overflow-x:hidden;
 }
-
-/* ===== ANIMASI ===== */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s ease;
-}
-.reveal.show{
-  opacity:1;
-  transform:none;
-}
-
-/* ===== COVER ===== */
-.hero{
-  min-height:100vh;
-  background:
-    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.85)),
-    url('cover.jpg') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:fixed;
-  inset:0;
-  z-index:50;
-}
-.hero.hide{
-  opacity:0;
-  pointer-events:none;
-  transition:1s;
-}
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:42px;
-}
-.hero h2{color:#d4af37;margin:10px 0}
-.hero h3{font-weight:300}
-
-.btn{
-  margin-top:30px;
-  padding:14px 38px;
-  border:none;
-  border-radius:30px;
-  background:#d4af37;
-  color:#000;
-  font-weight:600;
-  cursor:pointer;
-}
-
-/* ===== CONTENT ===== */
-#content{display:none}
-section{
-  padding:90px 20px;
-  position:relative;
-  z-index:5;
-}
-h2{
-  font-family:'Playfair Display',serif;
-  color:#d4af37;
-  margin-bottom:25px;
-}
-p{line-height:1.9;color:#eee}
-
-/* ===== PROFIL ===== */
-.profile{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-  max-width:900px;
-  margin:auto;
-}
-.card{
-  background:rgba(255,255,255,.08);
-  padding:25px;
-  border-radius:20px;
-  backdrop-filter:blur(6px);
-}
-.card img{
-  width:100%;
-  border-radius:14px;
-}
-.name{color:#d4af37;margin:15px 0}
-
-/* ===== GALERI ===== */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:18px;
-}
-.gallery img{
-  width:100%;
-  border-radius:14px;
-  transition:.4s;
-}
-.gallery img:hover{transform:scale(1.05)}
-
-/* ===== GIFT ===== */
-.gift-box{
-  background:rgba(255,255,255,.1);
-  padding:25px;
-  border-radius:20px;
-  max-width:380px;
-  margin:30px auto;
-}
-.copy-btn{
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  background:#d4af37;
-  font-weight:600;
-  cursor:pointer;
+.overlay{
+  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85));
 }
 
 /* ===== ORNAMEN ===== */
@@ -138,35 +24,117 @@ p{line-height:1.9;color:#eee}
   position:fixed;
   bottom:0;
   width:180px;
-  opacity:.7;
+  opacity:.55;
   z-index:1;
 }
-.wayang.left{left:-20px}
-.wayang.right{right:-20px;transform:scaleX(-1)}
-
-.corner{
-  position:fixed;
-  bottom:0;
-  width:140px;
-  opacity:.8;
-  z-index:1;
-}
-.corner.left{left:0}
-.corner.right{right:0;transform:scaleX(-1)}
+.wayang.left{left:-30px}
+.wayang.right{right:-30px;transform:scaleX(-1)}
 
 .flower{
   position:absolute;
   width:120px;
-  opacity:.7;
-  animation:float 8s ease-in-out infinite;
+  opacity:.8;
+  animation:float 6s ease-in-out infinite;
 }
+.flower.f1{top:120px;left:15px}
+.flower.f2{top:300px;right:15px}
 @keyframes float{
   0%{transform:translateY(0)}
-  50%{transform:translateY(18px)}
+  50%{transform:translateY(15px)}
   100%{transform:translateY(0)}
 }
 
-footer{padding:50px 20px;color:#ccc}
+/* ===== ANIMASI ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:1s}
+.reveal.show{opacity:1;transform:none}
+
+/* ===== COVER ===== */
+.cover{
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
+    url('cover.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:fixed;
+  inset:0;
+  z-index:10;
+}
+.cover.hide{opacity:0;pointer-events:none;transition:1s}
+.cover h1{font-family:'Playfair Display',serif;font-size:40px}
+.cover h2{color:#d4af37;margin:10px 0}
+.btn{
+  margin-top:30px;
+  padding:14px 36px;
+  border:none;
+  border-radius:30px;
+  background:#d4af37;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ===== SECTION ===== */
+section{
+  padding:90px 20px;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+h2{
+  font-family:'Playfair Display',serif;
+  color:#d4af37;
+  margin-bottom:20px;
+}
+p{line-height:1.9;color:#eee}
+
+/* ===== PROFIL ===== */
+.profile{
+  max-width:900px;
+  margin:auto;
+  display:grid;
+  gap:40px;
+}
+.card{
+  background:rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:25px;
+  backdrop-filter:blur(6px);
+}
+.card img{
+  width:100%;
+  border-radius:18px;
+}
+.name{color:#d4af37;font-size:20px;margin-top:15px}
+
+/* ===== GALERI ===== */
+.gallery{
+  max-width:1000px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:18px;
+}
+.gallery img{
+  width:100%;
+  border-radius:16px;
+  transition:.3s;
+}
+.gallery img:hover{transform:scale(1.05)}
+
+/* ===== GIFT ===== */
+.copy-btn{
+  margin-top:15px;
+  padding:10px 25px;
+  border-radius:20px;
+  border:none;
+  background:#d4af37;
+  font-weight:600;
+  cursor:pointer;
+}
+
+footer{padding:40px 20px;color:#aaa}
 </style>
 </head>
 
@@ -175,38 +143,34 @@ footer{padding:50px 20px;color:#ccc}
 <!-- ORNAMEN -->
 <img src="wayang.png" class="wayang left">
 <img src="wayang.png" class="wayang right">
-<img src="ornamen-sudut.png" class="corner left">
-<img src="ornamen-sudut.png" class="corner right">
 
-<!-- MUSIK -->
+<!-- AUDIO -->
 <audio id="bgm" loop>
   <source src="lagu.mp3" type="audio/mpeg">
 </audio>
 
 <!-- COVER -->
-<section class="hero" id="cover">
+<div class="cover" id="cover">
   <div>
     <h1>Walimatul Khitan</h1>
     <h2>Dzaky & Dzikri</h2>
-    <h3>Tasyakuran Khitanan</h3>
-    <button class="btn" onclick="openInvitation()">Buka Undangan</button>
+    <p>Tasyakuran Khitanan</p>
+    <button class="btn" onclick="openInvite()">Buka Undangan</button>
   </div>
-</section>
+</div>
 
-<!-- CONTENT -->
-<div id="content">
+<div class="overlay" id="content" style="display:none">
 
-<img src="flower1.png" class="flower" style="top:120px;left:20px">
-<img src="flower2.png" class="flower" style="top:350px;right:20px">
+<img src="flower1.png" class="flower f1">
+<img src="flower2.png" class="flower f2">
 
 <section class="reveal">
   <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
   <p>Assalamu’alaikum Warahmatullahi Wabarakatuh</p>
   <p>
-    Dengan memohon rahmat dan ridho Allah SWT,
-    kami sekeluarga bermaksud mengundang
-    Bapak/Ibu/Saudara/i untuk menghadiri acara
-    Walimatul Khitan putra kami tercinta.
+    Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud
+    mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara
+    Walimatul Khitan putra kami.
   </p>
 </section>
 
@@ -215,12 +179,12 @@ footer{padding:50px 20px;color:#ccc}
   <div class="profile">
     <div class="card">
       <img src="dzaky.jpg">
-      <h3 class="name">RB. Dzaky Ferdiansyah S</h3>
+      <div class="name">RB. Dzaky Ferdiansyah S</div>
       <p>Putra Pertama<br>Bapak Sudarman, Amd<br>& Ibu Endang Aprilawati, S.Tr.Keb</p>
     </div>
     <div class="card">
       <img src="dzikri.jpg">
-      <h3 class="name">RB. Dzikri Athar Alfariq</h3>
+      <div class="name">RB. Dzikri Athar Alfariq</div>
       <p>Putra Kedua<br>Bapak Sudarman, Amd<br>& Ibu Endang Aprilawati, S.Tr.Keb</p>
     </div>
   </div>
@@ -228,31 +192,23 @@ footer{padding:50px 20px;color:#ccc}
 
 <section class="reveal">
   <h2>Kenangan</h2>
-  <p>
-    Setiap tawa, langkah kecil, dan doa yang terucap
-    menjadi bagian dari kenangan indah yang akan
-    selalu kami simpan di dalam hati.
-  </p>
+  <p>Setiap senyuman adalah doa, setiap langkah adalah cerita indah.</p>
   <div class="gallery">
-    <img src="kenangan1.jpg"><img src="kenangan2.jpg"><img src="kenangan3.jpg">
-    <img src="kenangan4.jpg"><img src="kenangan5.jpg"><img src="kenangan6.jpg">
+    <img src="kenangan1.jpg">
+    <img src="kenangan2.jpg">
+    <img src="kenangan3.jpg">
+    <img src="kenangan4.jpg">
   </div>
 </section>
 
 <section class="reveal">
   <h2>Gift</h2>
   <p>
-    Doa restu Bapak/Ibu/Saudara/i merupakan hadiah
-    terindah bagi kami. Namun apabila berkenan
-    memberikan tanda kasih, dapat disampaikan melalui:
+    Doa restu Bapak/Ibu/Saudara/i adalah hadiah terindah bagi kami.
+    Apabila berkenan memberikan tanda kasih, dapat disampaikan melalui:
   </p>
-  <div class="gift-box">
-    <b>BRI</b><br>
-    <span id="rek">0164-01-069928-50-2</span><br>
-    a.n Endang Aprilawati
-    <br>
-    <button class="copy-btn" onclick="copyRek()">Salin Nomor Rekening</button>
-  </div>
+  <p><b>BRI</b><br>0164-01-069928-50-2<br>a.n Endang Aprilawati</p>
+  <button class="copy-btn" onclick="copyRek()">Salin Nomor Rekening</button>
 </section>
 
 <section class="reveal">
@@ -263,23 +219,23 @@ footer{padding:50px 20px;color:#ccc}
   <p>Wassalamu’alaikum Warahmatullahi Wabarakatuh</p>
 </section>
 
-<footer>Terima kasih atas doa & kehadirannya 🤍</footer>
+<footer>🤍 Terima kasih atas doa & kehadirannya 🤍</footer>
 </div>
 
 <script>
-function openInvitation(){
+function openInvite(){
   document.getElementById('cover').classList.add('hide');
   document.getElementById('content').style.display='block';
   document.getElementById('bgm').play();
+
   document.querySelectorAll('.reveal').forEach((el,i)=>{
     setTimeout(()=>el.classList.add('show'),i*200);
   });
 }
 
 function copyRek(){
-  const text=document.getElementById('rek').innerText;
-  navigator.clipboard.writeText(text);
-  alert("Nomor rekening berhasil disalin");
+  navigator.clipboard.writeText("016401069928502");
+  alert("Nomor rekening berhasil disalin 🤍");
 }
 </script>
 
