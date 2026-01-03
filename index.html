@@ -27,6 +27,26 @@ body::before{
   z-index:-1;
 }
 
+/* ===== KUNCI TOTAL LAYAR (ANTI GESER KANAN) ===== */
+html, body {
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden !important;
+}
+
+/* Semua section aman di viewport */
+section, .card, #content {
+  max-width:100vw;
+  overflow-x:hidden;
+}
+
+/* Elemen absolute tidak boleh bikin layar melebar */
+.wayang,
+.profile-wayang img,
+.gold {
+  max-width:100%;
+}  
+
 /* LOADER */
 #loader{
   position:fixed;inset:0;
