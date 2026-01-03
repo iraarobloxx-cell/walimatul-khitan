@@ -266,29 +266,30 @@
 ‎}
 ‎
 ‎/* PARTICLE */
-‎.gold{
+‎/* PARTICLE – HALUS & RINGAN */
+.gold{
   position:fixed;
-  top:-10px;
+  top:-20px;
   width:3px;
   height:3px;
   background:rgba(255,215,0,.75);
   border-radius:50%;
-  filter:blur(.4px);
   pointer-events:none;
-  animation:fall linear infinite;
+  filter:blur(.3px);
+  animation:fallSmooth linear infinite;
 }
 
-@keyframes fall{
-  0%{
-    transform:translateY(-10px);
+@keyframes fallSmooth{
+  from{
+    transform:translateY(-20px);
     opacity:0;
   }
-  10%{opacity:.8}
-  100%{
-    transform:translateY(120vh);
+  10%{opacity:1}
+  to{
+    transform:translateY(110vh);
     opacity:0;
   }
-}
+ }
 </style>
 </head>
 
@@ -444,13 +445,12 @@
 ‎<script>
 ‎window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),1500));
 ‎
-for(let i=0;i<55;i++){
-  let g=document.createElement('div');
+for(let i=0;i<30;i++){
+  const g=document.createElement('div');
   g.className='gold';
   g.style.left=Math.random()*100+'vw';
-  g.style.animationDuration=(8+Math.random()*10)+'s';
-  g.style.animationDelay=Math.random()*6+'s';
-  g.style.width=g.style.height=(2+Math.random()*2)+'px';
+  g.style.animationDuration=(8+Math.random()*6)+'s';
+  g.style.animationDelay=(Math.random()*6)+'s';
   document.body.appendChild(g);
 }
 ‎
