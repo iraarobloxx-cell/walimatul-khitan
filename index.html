@@ -4,179 +4,194 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walimatul Khitan Dzaky & Dzikri</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box}
 body{
-  font-family:'Poppins',sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-  text-align:center;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#f6f2e9;
+  color:#3b2f1e;
 }
-section{padding:60px 20px}
+.hidden{display:none}
+section{padding:60px 20px;text-align:center}
 h1,h2,h3{font-family:'Playfair Display',serif}
-h2{color:#d4af37;margin-bottom:20px}
-p{color:#ddd;line-height:1.7}
-/* COVER */
-.hero{
-  min-height:100vh;
-  background:url('cover.jpg') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:fixed;
-  inset:0;
-  z-index:10;
-}
-.hero::after{
-  content:'';
-  position:absolute;inset:0;
-  background:rgba(0,0,0,.65);
-}
-.hero-content{
-  position:relative;
-  z-index:2;
-}
-.hero h1{font-size:38px}
-.hero h3{margin-top:10px;font-weight:300}
+h2{color:#d4af37}
 .btn{
-  margin-top:25px;
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  background:#d4af37;
-  color:#000;
-  font-weight:600;
-  cursor:pointer;
+  background:#d4af37;
+  color:#fff;
+  padding:12px 30px;
+  border-radius:30px;
+  border:none;
+  font-size:16px;
+  margin-top:20px;
 }
-/* SEMBUNYIKAN ISI */
-#content{display:none}
-/* PROFIL */
-.profile{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-  max-width:900px;
-  margin:auto;
+.cover{
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url('cover.jpg') center/cover;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
-.card{
-  background:#1a1a1a;
-  border-radius:16px;
-  padding:20px;
-}
-.card img{
-  width:100%;
-  border-radius:12px;
-}
-.name{color:#d4af37;margin-top:15px}
-/* COUNTDOWN */
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-}
-.time{
-  background:#1f1f1f;
-  padding:15px;
-  border-radius:12px;
-  min-width:70px;
-}
-/* GALERI */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:15px;
+.profile img{
+  width:180px;
+  border-radius:20px;
+  margin:10px;
 }
 .gallery img{
-  width:100%;
-  border-radius:12px;
+  width:90%;
+  max-width:350px;
+  border-radius:15px;
+  margin:10px 0;
+}
+.card{
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  max-width:500px;
+  margin:20px auto;
+}
+.map-btn{
+  display:inline-block;
+  margin-top:15px;
+  background:#3b2f1e;
+  color:#fff;
+  padding:10px 25px;
+  border-radius:25px;
+  text-decoration:none;
 }
 input,textarea{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:none;
-}
-footer{
-  padding:30px;
-  font-size:14px;
-  color:#aaa;
+  width:90%;
+  max-width:400px;
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #ccc;
 }
 </style>
 </head>
+
 <body>
-<!-- MUSIK (DIKONTROL JS) -->
-<audio id="bgm" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/10/16/audio_6f4b7e6db6.mp3" type="audio/mpeg">
-</audio>
+
 <!-- COVER -->
-<section class="hero" id="cover">
-  <div class="hero-content">
-    <h1>Walimatul Khitan</h1>
-    <h2>Dzaky & Dzikri</h2>
-    <h3>Tasyakuran Khitanan</h3>
-    <button class="btn" onclick="openInvitation()">Buka Undangan</button>
-  </div>
-</section>
-<!-- ISI UNDANGAN -->
-<div id="content">
+<div class="cover" id="cover">
+  <div>
+    <h1>Walimatul Khitan</h1>
+    <h2>Dzaky & Dzikri</h2>
+    <p>Tasyakuran Khitanan</p>
+    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="content" class="hidden">
+
+<!-- PEMBUKA -->
 <section>
-  <h2>Putra Kami</h2>
-  <div class="profile">
-    <div class="card">
-      <img src="dzaky.jpg">
-      <h3 class="name">RB. Dzaky Ferdiansyah S</h3>
-      <p>Putra Pertama<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu <b>Endang</b> Aprilawati, S.Tr.Keb</p>
-    </div>
-    <div class="card">
-      <img src="dzikri.jpg">
-      <h3 class="name">RB. Dzikri Athar Alfariq</h3>
-      <p>Putra Kedua<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu <b>Endang</b> Aprilawati, S.Tr.Keb</p>
-    </div>
-  </div>
+  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
+  <p>Dengan memohon rahmat dan ridho Allah SWT,<br>
+  kami mengundang Bapak/Ibu/Saudara/i</p>
 </section>
-<section>
-  <h2>Detail Acara</h2>
-  <p>
-    Minggu, 25 Januari 2026<br>
-    Pukul 08.30 WIB – Selesai<br><br>
-    Gedung Pertemuan Prumnas Griya Anugerah
-  </p>
-  <a href="https://share.google/bKlbOUmIBcc99MSxQ"
-     target="_blank"
-     class="btn"
-     style="display:inline-block;margin-top:20px;">
-     📍 Lihat Lokasi di Google Maps
-  </a>
+
+<!-- PROFIL ANAK -->
+<section class="profile">
+  <h3>Putra Kami</h3>
+  <img src="dzaky.jpg">
+  <h4>RB. Dzaky Ferdiansyah S</h4>
+  <p>Putra pertama dari<br>
+  Bapak Sudarman, Amd<br>
+  & Ibu Endang Aprilawati, S.Tr.Keb</p>
+
+  <img src="dzikri.jpg">
+  <h4>RB. Dzikri Athar Alfariq</h4>
+  <p>Putra kedua dari<br>
+  Bapak Sudarman, Amd<br>
+  & Ibu Endang Aprilawati, S.Tr.Keb</p>
 </section>
+
+<!-- DETAIL ACARA -->
 <section>
-  <h2>Hitung Mundur Acara</h2>
-  <div class="countdown" id="countdown"></div>
+  <h3>Detail Acara</h3>
+  <div class="card">
+    <p><b>Minggu, 25 Januari 2026</b></p>
+    <p>Pukul 08.30 WIB – selesai</p>
+    <p>Gedung Pertemuan Prumnas Griya Anugerah</p>
+    <a class="map-btn" target="_blank"
+    href="https://share.google/bKlbOUmIBcc99MSxQ">
+    Buka Google Maps</a>
+  </div>
 </section>
+
+<!-- COUNTDOWN -->
 <section>
-  <h2>Kenangan</h2>
-  <div class="gallery">
-    <img src="kenangan1.jpg">
-    <img src="kenangan2.jpg">
-    <img src="kenangan3.jpg">
-    <img src="kenangan4.jpg">
-    <img src="kenangan5.jpg">
-    <img src="kenangan6.jpg">
-  </div>
+  <h3>Menuju Hari Bahagia</h3>
+  <h2 id="countdown"></h2>
 </section>
-<section>
-  <h2>Gift</h2>
-  <p>
-    BRI<br>
-    0164-01-069928-50-2<br>
-    a.n Endang Aprilawati
-  </p>
+
+<!-- KENANGAN -->
+<section class="gallery">
+  <h3>Kenangan</h3>
+  <img src="kenangan1.jpg">
+  <img src="kenangan2.jpg">
+  <img src="kenangan3.jpg">
+  <img src="kenangan4.jpg">
+  <img src="kenangan5.jpg">
+  <img src="kenangan6.jpg">
 </section>
+
+<!-- BUKU TAMU -->
 <section>
-  <h2>Buku Tamu & Doa</h2>
-  <inp
+  <h3>Buku Tamu & Doa</h3>
+  <input placeholder="Nama">
+  <textarea rows="4" placeholder="Pesan & Doa"></textarea>
+  <br>
+  <button class="btn">Kirim</button>
+</section>
+
+<!-- GIFT -->
+<section>
+  <h3>Gift</h3>
+  <p>Doa restu Anda merupakan hadiah terindah.<br>
+  Namun bila berkenan:</p>
+  <div class="card">
+    <p><b>BRI</b><br>1234-xxxx-xxxx<br>a.n Sudarman</p>
+  </div>
+</section>
+
+<!-- PENUTUP -->
+<section>
+  <p>Terima kasih atas doa dan kehadiran Anda</p>
+</section>
+
+</div>
+
+<script>
+function openInvite(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('content').classList.remove('hidden');
+  document.getElementById('music').play();
+}
+
+const target = new Date("2026-01-25T08:30:00").getTime();
+setInterval(()=>{
+  const now = new Date().getTime();
+  const d = target-now;
+  if(d>0){
+    document.getElementById('countdown').innerHTML =
+    Math.floor(d/(1000*60*60*24))+" Hari";
+  }
+},1000);
+</script>
+
+</body>
+</html>
