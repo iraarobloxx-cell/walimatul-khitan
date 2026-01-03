@@ -266,35 +266,20 @@
 ‎}
 ‎
 ‎/* PARTICLE */
-‎/* PARTICLE – HALUS & RINGAN */
-.gold{
-  position:fixed;
-  top:-20px;
-  width:3px;
-  height:3px;
-  background:rgba(255,215,0,.75);
-  border-radius:50%;
-  pointer-events:none;
-  filter:blur(.3px);
-  animation:fallSmooth linear infinite;
-}
-
-@keyframes fallSmooth{
-  from{
-    transform:translateY(-20px);
-    opacity:0;
-  }
-  10%{opacity:1}
-  to{
-    transform:translateY(110vh);
-    opacity:0;
-  }
- }
-</style>
-</head>
-
-<body>
-  
+‎.gold{
+‎  position:fixed;
+‎  top:-10px;
+‎  width:6px;height:6px;
+‎  background:#ffd700;
+‎  border-radius:50%;
+‎  animation:fall linear infinite;
+‎}
+‎@keyframes fall{to{transform:translateY(120vh)}}
+‎</style>
+‎</head>
+‎
+‎<body>
+‎
 ‎<div id="loader"><div class="loader-ring"></div></div>
 ‎<div class="fog"></div>
 ‎
@@ -445,14 +430,13 @@
 ‎<script>
 ‎window.addEventListener("load",()=>setTimeout(()=>loader.classList.add("hide"),1500));
 ‎
-for(let i=0;i<30;i++){
-  const g=document.createElement('div');
-  g.className='gold';
-  g.style.left=Math.random()*100+'vw';
-  g.style.animationDuration=(8+Math.random()*6)+'s';
-  g.style.animationDelay=(Math.random()*6)+'s';
-  document.body.appendChild(g);
-}
+‎for(let i=0;i<45;i++){
+‎ let g=document.createElement('div');
+‎ g.className='gold';
+‎ g.style.left=Math.random()*100+'vw';
+‎ g.style.animationDuration=(5+Math.random()*6)+'s';
+‎ document.body.appendChild(g);
+‎}
 ‎
 ‎function openInvite(){
 ‎ cover.style.display='none';
