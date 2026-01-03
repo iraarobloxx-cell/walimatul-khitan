@@ -47,6 +47,28 @@ body::before{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
+  /* ===== ANIMASI BUKA UNDANGAN ===== */
+#cover {
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+#cover.hide {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+#content {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+}
+
+#content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+  
 /* EMBUN */
 .fog{
   position:fixed;inset:0;
@@ -364,68 +386,100 @@ input,select,textarea{
 </div>
 
 <script>
-/* ================= LOADER ================= */
+  // ===== AMBIL DOM =====
+const loader=document.getElementById("loader");
+const cover=document.getElementById("cover");
+const content=document.getElementById("content");
+const music=document.getElementById("music");
+const nama=document.getElementById("nama");
+const status=document.getElementById("status");
+const pesan=document.getElementById("pesan");
+const list=document.getElementById("list");
+  
+/* LOADER */
 window.addEventListener("load", () => {
-  setTimeout(() => {
-    loader.classList.add("hide");
-  }, 1500);
+  setTimeout(() => loader.classList.add("hide"), 1500);
 });
 
-/* ================= PARTIKEL EMAS HALUS ================= */
-const GOLD_COUNT = 28; // lebih sedikit = lebih elegan
-for (let i = 0; i < GOLD_COUNT; i++) {
-  const g = document.createElement('div');
-  g.className = 'gold';
-
-  const size = Math.random() * 4 + 2; // 2–6px
-  g.style.width = size + 'px';
-  g.style.height = size + 'px';
-
-  g.style.left = Math.random() * 100 + 'vw';
-  g.style.animationDuration = (10 + Math.random() * 12) + 's';
-  g.style.animationDelay = Math.random() * 8 + 's';
+/* PARTIKEL EMAS */
+for (let i = 0; i < 28; i++) {
+  const g = document.createElement("div");
+  g.className = "gold";
+  const size = Math.random() * 4 + 2;
+  g.style.width = g.style.height = size + "px";
+  g.style.left = Math.random() * 100 + "vw";
+  g.style.animationDuration = (10 + Math.random() * 12) + "s";
+  g.style.animationDelay = Math.random() * 6 + "s";
   g.style.opacity = Math.random() * 0.4 + 0.2;
-
   document.body.appendChild(g);
 }
 
-/* ================= BUKA UNDANGAN ================= */
+/* BUKA UNDANGAN */
 function openInvite(){
-  cover.style.opacity = 0;
-  setTimeout(() => {
-    cover.style.display = 'none';
-    content.style.display = 'block';
+  cover.classList.add("hide");
+  setTimeout(()=>{
+    cover.style.display = "none";
+    content.style.display = "block";
+    content.classList.add("show");
     music.play();
-  }, 800);
+  },1200);
 }
 
-/* ================= ANIMASI SCROLL ================= */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
+/* SCROLL ANIMATION */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
   });
-}, {
-  threshold: 0.18,
-  rootMargin: "0px 0px -60px 0px"
-});
+},{threshold:0.18});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-/* ================= COUNTDOWN ================= */
+/* COUNTDOWN */
 const target = new Date("2026-01-25T08:30:00").getTime();
+setInterval(()=>{
+  const diff = target - new Date().getTime();
+  if(diff<=0) return;
+  d.innerText = Math.floor(diff / 86400000);
+  h.innerText = Math.floor(diff % 86400000 / 3600000);
+  m.innerText = Math.floor(diff % 3600000 / 60000);
+  s.innerText = Math.floor(diff % 60000 / 1000);
+},1000);
 
-setInterval(() => {
-  const now = new Date().getTime();
-  const diff = target - now;
-  if (diff <= 0) return;
+/* FIREBASE BUKU TAMU */
+const firebaseConfig = {
+  apiKey: "ISI_API_KEY_KAMU",
+  authDomain: "ISI_PROJECT.firebaseapp.com",
+  projectId: "ISI_PROJECT_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-  d.innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-  h.innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  m.innerText = Math.floor((diff / (1000 * 60)) % 60);
-  s.innerText = Math.floor((diff / 1000) % 60);
-}, 1000);
+function kirim(){
+  if(!nama.value || !pesan.value){
+    alert("Nama dan pesan wajib diisi 🙏");
+    return;
+  }
+  db.collection("bukutamu").add({
+    nama: nama.value,
+    status: status.value,
+    pesan: pesan.value,
+    waktu: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  nama.value="";
+  pesan.value="";
+}
+
+db.collection("bukutamu")
+.orderBy("waktu","desc")
+.onSnapshot(snap=>{
+  list.innerHTML="";
+  snap.forEach(doc=>{
+    const d=doc.data();
+    list.innerHTML+=`
+      <div class="comment">
+        <b>${d.nama}</b> — ${d.status}<br>${d.pesan}
+      </div>`;
+  });
+});
 </script>
 
 </body>
