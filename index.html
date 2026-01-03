@@ -20,8 +20,14 @@ body{
   text-align:center;
   overflow-x:hidden;
 }
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:-1;
+}
 
-/* ===== LOADER ===== */
+/* LOADER */
 #loader{
   position:fixed;inset:0;
   background:#0b0b0b;
@@ -29,9 +35,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:1s;
 }
-#loader.hide{opacity:0;visibility:hidden}
 .loader-ring{
   width:90px;height:90px;
   border:4px solid rgba(212,175,55,.25);
@@ -41,25 +45,7 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ===== EMBUN ===== */
-.fog{
-  position:fixed;inset:0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(255,255,255,.06), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,.05), transparent 45%);
-  pointer-events:none;
-  animation:fog 10s ease-in-out infinite alternate;
-  z-index:0;
-}
-@keyframes fog{from{opacity:.3}to{opacity:.6}}
-
-/* ===== GLOBAL ===== */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:-1;
-}
+/* GLOBAL */
 h1,h2,h3{
   font-family:'Playfair Display',serif;
   color:#d4af37;
@@ -75,30 +61,17 @@ section{
   background:rgba(0,0,0,.35);
   border-radius:32px;
   padding:32px;
-  margin-bottom:70px;
+  margin-bottom:80px;
   border:1.5px solid rgba(212,175,55,.45);
-  box-shadow:
-    inset 0 0 0 1px rgba(212,175,55,.15),
-    0 30px 55px rgba(0,0,0,.5);
-  animation:fadeUp 1.3s ease both;
-}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(60px)}
-  to{opacity:1;transform:none}
-}
-.card h2::after{
-  content:"";
-  display:block;
-  width:90px;height:2px;
-  margin:14px auto 0;
-  background:linear-gradient(90deg,transparent,#d4af37,transparent);
+  box-shadow:0 30px 55px rgba(0,0,0,.5);
 }
 .card p{
   font-family:'Cormorant Garamond',serif;
-  font-size:18px;
-  letter-spacing:.4px;
+  font-size:19px;
   line-height:1.9;
+  margin-top:14px;
 }
+.card p br{line-height:2.3}
 .btn{
   background:#d4af37;
   color:#000;
@@ -108,11 +81,9 @@ section{
   font-weight:600;
   cursor:pointer;
   margin-top:28px;
-  transition:.3s;
 }
-.btn:hover{transform:translateY(-2px)}
 
-/* ===== COVER ===== */
+/* COVER */
 #cover{
   height:100vh;
   background:
@@ -124,59 +95,55 @@ section{
   animation:cinematic 8s ease forwards;
 }
 @keyframes cinematic{
-  from{transform:scale(1.15);filter:brightness(.7)}
-  to{transform:scale(1);filter:brightness(1)}
-}
-#cover .inner{
-  background:rgba(0,0,0,.45);
-  padding:55px;
-  border-radius:40px;
+  from{transform:scale(1.15)}
+  to{transform:scale(1)}
 }
 
-/* ===== ORNAMEN ===== */
-.wayang{
-  position:absolute;
-  bottom:-10px;
-  width:150px;
-  opacity:.45;
-}
-.wayang.left{left:-20px;transform:scaleX(-1)}
-.wayang.right{right:-20px}
-
-/* ===== FLOWER ===== */
+/* FLOWER */
 .flower{
   width:90px;
   margin:0 auto 25px;
   animation:float 6s ease-in-out infinite;
 }
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(14px)}
-  100%{transform:translateY(0)}
-}
+@keyframes float{50%{transform:translateY(14px)}}
 
-/* ===== PROFILE ===== */
+/* WAYANG */
+.wayang{
+  position:absolute;
+  bottom:-30px;
+  width:190px;
+  opacity:.55;
+  animation:wayangFloat 8s ease-in-out infinite;
+}
+.wayang.left{left:-40px;transform:scaleX(-1)}
+.wayang.right{right:-40px}
+@keyframes wayangFloat{50%{transform:translateY(18px)}}
+
+/* PROFILE */
 .profile-box{
   border:1px solid rgba(212,175,55,.5);
-  border-radius:26px;
+  border-radius:28px;
   padding:25px;
-  margin-bottom:35px;
+  margin-bottom:40px;
   background:rgba(0,0,0,.25);
 }
 .profile-box img{
   width:100%;
-  border-radius:20px;
+  border-radius:22px;
   margin-bottom:15px;
 }
 .profile-box::after{
   content:'';
   display:block;
-  margin-top:15px;
-  height:38px;
-  background:url('wayang.png') center/contain no-repeat;
+  margin-top:22px;
+  height:80px;
+  background:
+    url('wayang.png') left center/contain no-repeat,
+    url('wayang.png') right center/contain no-repeat;
+  opacity:.55;
 }
 
-/* ===== GALLERY ===== */
+/* GALLERY */
 .gallery{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -185,26 +152,19 @@ section{
 .gallery img{
   width:100%;
   border-radius:22px;
-  box-shadow:0 12px 30px rgba(0,0,0,.5);
-  transition:.6s;
-}
-.gallery img:hover{
-  transform:scale(1.05);
-  box-shadow:0 20px 45px rgba(212,175,55,.45);
 }
 
-/* ===== COUNTDOWN ===== */
+/* COUNTDOWN */
 .countdown{
   display:flex;
   justify-content:center;
-  gap:14px;
+  gap:16px;
   margin-top:30px;
 }
 .cd{
   background:rgba(0,0,0,.5);
-  padding:16px 20px;
+  padding:18px 22px;
   border-radius:18px;
-  min-width:80px;
 }
 .cd span{
   display:block;
@@ -213,7 +173,7 @@ section{
   font-weight:bold;
 }
 
-/* ===== FORM ===== */
+/* FORM */
 input,select,textarea{
   width:100%;
   padding:14px;
@@ -230,7 +190,18 @@ input,select,textarea{
   text-align:left;
 }
 
-/* ===== GOLD PARTICLE ===== */
+/* REVEAL */
+.reveal{
+  opacity:0;
+  transform:translateY(70px);
+  transition:1.3s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* GOLD */
 .gold{
   position:fixed;
   top:-10px;
@@ -240,20 +211,15 @@ input,select,textarea{
   border-radius:50%;
   animation:fall linear infinite;
 }
-@keyframes fall{
-  to{transform:translateY(120vh)}
-}
+@keyframes fall{to{transform:translateY(120vh)}}
 </style>
 </head>
 
 <body>
 
 <div id="loader"><div class="loader-ring"></div></div>
-<div class="fog"></div>
-
 <audio id="music" src="lagu.mp3" loop></audio>
 
-<!-- COVER -->
 <section id="cover">
   <div class="inner">
     <h1>Walimatul Khitan</h1>
@@ -265,8 +231,7 @@ input,select,textarea{
 
 <div id="content" style="display:none">
 
-<!-- PEMBUKA -->
-<section class="card">
+<section class="card reveal">
   <img src="flower.png" class="flower">
   <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p><br>
   <p>
@@ -279,8 +244,7 @@ input,select,textarea{
   <img src="wayang.png" class="wayang right">
 </section>
 
-<!-- PROFIL ANAK -->
-<section class="card">
+<section class="card reveal">
   <h2>Putra Kami</h2>
 
   <div class="profile-box">
@@ -304,30 +268,26 @@ input,select,textarea{
   </div>
 </section>
 
-<!-- WAKTU & TEMPAT -->
-<section class="card">
+<section class="card reveal">
   <h2>Waktu & Tempat</h2>
   <p>
     📅 Minggu, 25 Januari 2026<br>
     ⏰ Pukul 08.30 WIB – Selesai<br><br>
     📍 Gedung Pertemuan Prumnas Griya Anugerah
   </p>
-
   <a class="btn" target="_blank"
      href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
      Buka Google Maps
   </a>
 </section>
 
-<!-- COUNTDOWN TERPISAH -->
-<section class="card">
+<section class="card reveal">
   <h2>Menuju Hari Bahagia</h2>
   <p>
     Hitung mundur menuju hari pelaksanaan
     Walimatul Khitan Dzaky & Dzikri
     yang InsyaAllah penuh keberkahan.
   </p>
-
   <div class="countdown">
     <div class="cd"><span id="d">0</span>Hari</div>
     <div class="cd"><span id="h">0</span>Jam</div>
@@ -336,48 +296,38 @@ input,select,textarea{
   </div>
 </section>
 
-<!-- KENANGAN -->
-<section class="card">
+<section class="card reveal">
   <h2>Kenangan</h2>
   <p>
     Setiap langkah kecil, tawa, dan kebersamaan
     akan selalu kami simpan sebagai kenangan indah
     yang terukir dalam doa dan hati kami.
   </p>
-
   <div class="gallery">
-    <img src="kenangan1.jpg">
-    <img src="kenangan2.jpg">
-    <img src="kenangan3.jpg">
-    <img src="kenangan4.jpg">
-    <img src="kenangan5.jpg">
-    <img src="kenangan6.jpg">
+    <img src="kenangan1.jpg"><img src="kenangan2.jpg">
+    <img src="kenangan3.jpg"><img src="kenangan4.jpg">
+    <img src="kenangan5.jpg"><img src="kenangan6.jpg">
   </div>
 </section>
 
-<!-- GIFT -->
-<section class="card">
+<section class="card reveal">
   <h2>Gift</h2>
   <p>
     Doa restu Bapak/Ibu/Saudara/i merupakan hadiah
     terindah bagi kami. Apabila berkenan memberikan
     tanda kasih, dapat disampaikan melalui:
   </p>
-
-  <p id="rek">
+  <p>
     BRI<br>
     0164-01-069928-50-2<br>
     a.n Endang Aprilawati
   </p>
-
-  <button class="btn"
-    onclick="navigator.clipboard.writeText('016401069928502')">
+  <button class="btn" onclick="navigator.clipboard.writeText('016401069928502')">
     Salin Nomor Rekening
   </button>
 </section>
 
-<!-- BUKU TAMU -->
-<section class="card">
+<section class="card reveal">
   <h2>Buku Tamu</h2>
   <p>
     Silakan konfirmasi kehadiran serta titipkan
@@ -398,78 +348,84 @@ input,select,textarea{
 </div>
 
 <script>
-// LOADER
-window.addEventListener("load",()=>{
-  setTimeout(()=>document.getElementById("loader").classList.add("hide"),1500)
-})
+/* WA NUMBER */
+const WA_NUMBER="6281366707060";
 
-// PARTIKEL EMAS
+/* LOADER */
+window.onload=()=>{
+ document.getElementById("loader").style.display="none";
+};
+
+/* GOLD */
 for(let i=0;i<45;i++){
-  let g=document.createElement('div');
-  g.className='gold';
-  g.style.left=Math.random()*100+'vw';
-  g.style.animationDuration=(5+Math.random()*6)+'s';
-  document.body.appendChild(g);
+ let g=document.createElement('div');
+ g.className='gold';
+ g.style.left=Math.random()*100+'vw';
+ g.style.animationDuration=(5+Math.random()*6)+'s';
+ document.body.appendChild(g);
 }
 
-// BUKA UNDANGAN
+/* OPEN */
 function openInvite(){
-  document.getElementById('cover').style.display='none';
-  document.getElementById('content').style.display='block';
-  document.getElementById('music').play();
+ cover.style.display='none';
+ content.style.display='block';
+ music.play();
 }
 
-// COUNTDOWN
+/* COUNTDOWN */
 const target=new Date("2026-01-25T08:30:00").getTime();
 setInterval(()=>{
-  let t=target-new Date().getTime();
-  if(t<0)return;
-  d.innerText=Math.floor(t/86400000);
-  h.innerText=Math.floor(t%86400000/3600000);
-  m.innerText=Math.floor(t%3600000/60000);
-  s.innerText=Math.floor(t%60000/1000);
+ let t=target-Date.now();
+ if(t<0)return;
+ d.innerText=Math.floor(t/86400000);
+ h.innerText=Math.floor(t%86400000/3600000);
+ m.innerText=Math.floor(t%3600000/60000);
+ s.innerText=Math.floor(t%60000/1000);
 },1000);
 
-// FIREBASE
+/* SCROLL */
+const reveals=document.querySelectorAll('.reveal');
+window.addEventListener('scroll',()=>{
+ const trigger=innerHeight*0.85;
+ reveals.forEach(r=>{
+  if(r.getBoundingClientRect().top<trigger){
+   r.classList.add('show');
+  }
+ });
+});
+
+/* FIREBASE */
 const firebaseConfig={
-  apiKey:"GANTI_API_KEY",
-  authDomain:"GANTI.firebaseapp.com",
-  projectId:"GANTI"
+ apiKey:"GANTI_API_KEY",
+ authDomain:"GANTI.firebaseapp.com",
+ projectId:"GANTI"
 };
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 
-// WA
-const WA_NUMBER="6281366707060";
-
-// REALTIME BUKU TAMU
+/* REALTIME */
 db.collection("bukutamu").orderBy("time","desc")
 .onSnapshot(snap=>{
-  list.innerHTML='';
-  snap.forEach(doc=>{
-    const d=doc.data();
-    list.innerHTML+=
-      `<div class="comment">
-        <b>${d.nama}</b> — ${d.status}<br>${d.pesan}
-      </div>`;
-  });
+ list.innerHTML='';
+ snap.forEach(doc=>{
+  const d=doc.data();
+  list.innerHTML+=
+   `<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
+ });
 });
 
-// KIRIM
+/* SEND */
 function kirim(){
-  db.collection("bukutamu").add({
-    nama:nama.value,
-    status:status.value,
-    pesan:pesan.value,
-    time:firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  window.open(
-    `https://wa.me/${WA_NUMBER}?text=Nama:${nama.value}%0AStatus:${status.value}%0APesan:${pesan.value}`
-  );
-
-  nama.value='';
-  pesan.value='';
+ if(!nama.value||!pesan.value)return alert("Lengkapi data");
+ db.collection("bukutamu").add({
+  nama:nama.value,
+  status:status.value,
+  pesan:pesan.value,
+  time:firebase.firestore.FieldValue.serverTimestamp()
+ });
+ const text=`Nama: ${nama.value}%0AStatus: ${status.value}%0APesan:%0A${pesan.value}`;
+ window.open(`https://wa.me/${WA_NUMBER}?text=${text}`);
+ nama.value='';pesan.value='';
 }
 </script>
 
