@@ -290,8 +290,25 @@ section{padding:90px 20px;text-align:center}
     </div>
   </div>
 </section>
-    
-<a class="share" id="waShare" target="_blank">Bagikan WhatsApp</a>
+
+    <!-- UCAPAN TERIMA KASIH -->
+<section>
+  <div class="card reveal">
+    <h2 class="shimmer">Terima Kasih</h2>
+    <p style="line-height:1.8; margin-top:16px">
+      Merupakan suatu kehormatan dan kebahagiaan bagi kami
+      apabila Bapak/Ibu/Saudara/i berkenan hadir serta
+      memberikan doa restu kepada putra kami.
+      <br><br>
+      Atas perhatian dan kehadirannya,
+      kami ucapkan terima kasih.
+    </p>
+
+    <p style="margin-top:24px">
+      Wassalamu’alaikum Warahmatullahi Wabarakatuh
+    </p>
+  </div>
+</section>
 
 <script>
 /* ===== Nama Tamu dari URL ===== */
@@ -328,9 +345,6 @@ function copyRek(){
   navigator.clipboard.writeText(rek.innerText);
   alert("Nomor rekening berhasil disalin");
 }
-
-/* ===== WA Share ===== */
-waShare.href=`https://wa.me/?text=Undangan Khitanan Dzaky & Dzikri%0A${location.href}`;
 
 /* ===== Reveal on Scroll ===== */
 const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')),{threshold:.2});
