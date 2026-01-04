@@ -390,6 +390,18 @@ setInterval(()=>{
   m.innerText=Math.floor(diff%3600000/60000);
   s.innerText=Math.floor(diff%60000/1000);
 },1000);
+
+  // 🔐 ANTI STUCK LOADER (FIX FINAL)
+setTimeout(() => {
+  const loader = document.getElementById("loader");
+  const content = document.getElementById("content");
+  const cover = document.getElementById("cover");
+
+  if (loader) loader.style.display = "none";
+  if (cover) cover.style.display = "flex";
+  if (content) content.style.display = "none";
+}, 2000);
+  
 </script>
 
 </body>
