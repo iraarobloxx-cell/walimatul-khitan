@@ -194,27 +194,6 @@ footer{padding:60px 20px;text-align:center;color:#6b563f}
   </div>
 </div>
 
-  /* ===== JUDUL COVER PUTIH KEEMASAN ===== */
-#cover h1{
-  background:linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #fff6dc 40%,
-    #e6c98a 70%,
-    #c9a14a 100%
-  );
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.35);
-}
-
-#cover p{
-  color:#f5f0e6;
-}
-  
 <!-- MAIN -->
 <div id="main" class="hidden">
   <div class="bg-wrap">
@@ -262,7 +241,7 @@ footer{padding:60px 20px;text-align:center;color:#6b563f}
     <section>
       <div class="card reveal">
         <img src="dzaky.jpg" class="photo">
-        <div class="name shimmer">RB. Dzaky Athar Alfariq S</div>
+        <div class="name shimmer">RB. Dzaky Ferdiansyah S</div>
         <p>Putra pertama dari Bapak <b>Sudarman, Amd.</b><br>dan Ibu <b>Endang Aprilwati, S.Tr.Keb</b></p>
       </div>
     </section>
@@ -293,28 +272,34 @@ footer{padding:60px 20px;text-align:center;color:#6b563f}
     </section>
 
     <!-- GIFT -->
-    <section>
-      <div class="card reveal">
-        <h2 class="shimmer">Gift</h2>
-        <p>
-       Doa restu adalah hadiah terindah bagi kami.
-Apabila berkenan memberikan tanda kasih,
-dapat disampaikan melalui rekening berikut.
-          <b>BRI</b><br>
-          <span id="rek">0164-01-069928-50-2</span><br>
-          a.n. <b>Endang Aprilwati</b>
-        </p>
-        <button class="copy-btn" onclick="copyRek()">Salin No. Rekening</button>
-      </div>
-    </section>
+<section>
+  <div class="card reveal">
+    <h2 class="shimmer">Gift</h2>
 
-    <footer class="reveal">
-      Wassalamu’alaikum Warahmatullahi Wabarakatuh
-    </footer>
+    <p style="margin-top:12px; line-height:1.7">
+      Doa restu Bapak/Ibu/Saudara/i
+      merupakan hadiah yang paling berharga bagi kami.
+      <br><br>
+      Namun apabila berkenan memberikan tanda kasih,
+      dapat disampaikan melalui informasi berikut.
+    </p>
 
+    <div style="margin-top:20px">
+      <p style="font-size:15px">
+        <b>BRI</b><br>
+        <span id="rek" style="font-size:17px; letter-spacing:1px">
+          0164-01-069928-50-2
+        </span><br>
+        a.n. <b>Endang Aprilwati</b>
+      </p>
+
+      <button class="copy-btn" onclick="copyRek()">
+        Salin Nomor Rekening
+      </button>
+    </div>
   </div>
-</div>
-
+</section>
+    
 <a class="share" id="waShare" target="_blank">Bagikan WhatsApp</a>
 
 <script>
