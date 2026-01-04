@@ -22,17 +22,14 @@ body{
 }
 body::before{
   content:'';
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:rgba(0,0,0,.55);
-  z-index:1;
-  pointer-events:none;
+  z-index:-1;
 }
 
 /* LOADER */
 #loader{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:#0b0b0b;
   z-index:9999;
   display:flex;
@@ -49,45 +46,14 @@ body::before{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* COVER */
-#cover{
-  height:100vh;
-  background:
-    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
-    url('cover.jpg') center/cover;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  z-index:10;
-  transition:opacity 1.2s ease, transform 1.2s ease;
-}
-#cover.hide{
-  opacity:0;
-  transform:scale(1.08);
-  pointer-events:none;
-}
-#cover .inner{
-  background:rgba(0,0,0,.45);
-  padding:55px;
-  border-radius:40px;
-  position:relative;
-  z-index:11;
-}
-#cover button{
-  position:relative;
-  z-index:12;
-  pointer-events:auto;
-}
+/* COVER ANIMATION */
+#cover{transition:opacity 1.2s ease,transform 1.2s ease}
+#cover.hide{opacity:0;transform:scale(1.08);pointer-events:none}
 
-/* CONTENT */
 #content{
-  display:none;
   opacity:0;
   transform:translateY(40px);
   transition:1.4s ease;
-  position:relative;
-  z-index:5;
 }
 #content.show{
   opacity:1;
@@ -96,10 +62,11 @@ body::before{
 
 /* EMBUN */
 .fog{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,.05), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.04), transparent 45%);
   pointer-events:none;
-  z-index:2;
   animation:fog 12s ease-in-out infinite alternate;
 }
 @keyframes fog{from{opacity:.25}to{opacity:.5}}
@@ -123,15 +90,8 @@ section{
   border:1.5px solid rgba(212,175,55,.45);
 }
 
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1.4s ease;
-}
-.reveal.show{
-  opacity:1;
-  transform:none;
-}
+.reveal{opacity:0;transform:translateY(40px);transition:1.4s}
+.reveal.show{opacity:1;transform:none}
 
 .card p{
   font-family:'Cormorant Garamond',serif;
@@ -151,6 +111,22 @@ section{
   cursor:pointer;
 }
 
+/* COVER */
+#cover{
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
+    url('cover.jpg') center/cover;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#cover .inner{
+  background:rgba(0,0,0,.45);
+  padding:55px;
+  border-radius:40px;
+}
+
 /* FLOWER */
 .flower{
   width:90px;
@@ -161,48 +137,6 @@ section{
   0%{transform:translateY(0)}
   50%{transform:translateY(12px)}
   100%{transform:translateY(0)}
-}
-
-/* PROFILE */
-.profile-box{
-  border:1px solid rgba(212,175,55,.5);
-  border-radius:30px;
-  padding:30px;
-  margin-bottom:55px;
-  background:rgba(0,0,0,.25);
-}
-.profile-box img{
-  width:100%;
-  border-radius:22px;
-  margin-bottom:20px;
-}
-
-/* GALLERY */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-.gallery img{
-  width:100%;
-  border-radius:22px;
-}
-
-/* COUNTDOWN */
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:22px;
-}
-.cd{
-  background:rgba(0,0,0,.55);
-  padding:22px;
-  border-radius:22px;
-}
-.cd span{
-  font-size:30px;
-  color:#d4af37;
-  display:block;
 }
 
 /* FORM */
@@ -221,19 +155,6 @@ input,select,textarea{
   margin-top:14px;
   text-align:left;
 }
-
-/* GOLD */
-.gold{
-  position:fixed;
-  top:-10px;
-  width:3px;
-  height:3px;
-  background:rgba(212,175,55,.6);
-  border-radius:50%;
-  animation:fall linear infinite;
-  pointer-events:none;
-}
-@keyframes fall{to{transform:translateY(120vh)}}
 </style>
 </head>
 
@@ -255,219 +176,150 @@ input,select,textarea{
 
 <div id="content">
 
-<section class="card reveal">
-  <img src="flower.png" class="flower">
-  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
-  <p>
-    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
-    Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang
-    Bapak/Ibu/Saudara/i untuk menghadiri acara Walimatul Khitan putra kami tercinta.
-  </p>
-</section>
+  ‎<section class="card reveal">
+‎  <img src="flower.png" class="flower">
+‎  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
+‎  <p>
+‎    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
+‎    Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang
+‎    Bapak/Ibu/Saudara/i untuk menghadiri acara Walimatul Khitan putra kami tercinta.
+‎  </p>
+‎</section>
+‎
+‎<section class="card reveal">
+‎  <h2>Putra Kami</h2>
+‎
+‎  <div class="profile-box">
+‎    <img src="dzaky.jpg">
+‎    <h3>RB. Dzaky Ferdiansyah S</h3>
+‎    <p>
+‎      Putra Pertama<br>
+‎      Bapak Sudarman, Amd<br>
+‎      & Ibu Endang Aprilawati, S.Tr.Keb
+‎    </p>
+‎  </div>
+‎
+‎  <div class="profile-box">
+‎    <img src="dzikri.jpg">
+‎    <h3>RB. Dzikri Athar Alfariq</h3>
+‎    <p>
+‎      Putra Kedua<br>
+‎      Bapak Sudarman, Amd<br>
+‎      & Ibu Endang Aprilawati, S.Tr.Keb
+‎    </p>
+‎  </div>
+‎</section>
+‎
+‎<section class="card reveal">
+‎  <h2>Waktu & Tempat</h2>
+‎  <p>📅 Minggu, 25 Januari 2026</p>
+‎  <p>⏰ Pukul 08.30 WIB – Selesai</p>
+‎  <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
+‎  <a class="btn" target="_blank"
+‎     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
+‎     Buka Google Maps
+‎  </a>
+‎</section>
+‎
+‎<section class="card reveal">
+‎  <h2>Menuju Hari Bahagia</h2>
+‎  <div class="countdown">
+‎    <div class="cd"><span id="d">0</span>Hari</div>
+‎    <div class="cd"><span id="h">0</span>Jam</div>
+‎    <div class="cd"><span id="m">0</span>Menit</div>
+‎    <div class="cd"><span id="s">0</span>Detik</div>
+‎  </div>
+‎</section>
+‎
+‎<section class="card reveal">
+‎  <h2>Gift</h2>
+‎  <p>
+‎    BRI<br>
+‎    0164-01-069928-50-2<br>
+‎    a.n Endang Aprilawati
+‎  </p>
+‎  <button class="btn"
+‎    onclick="navigator.clipboard.writeText('016401069928502')">
+‎    Salin Nomor Rekening
+‎  </button>
+‎</section>
+‎
+‎<section class="card reveal">
+‎  <h2>Buku Tamu</h2>
+‎  <input id="nama" placeholder="Nama">
+‎  <select id="status">
+‎    <option>InsyaAllah Hadir</option>
+‎    <option>Tidak Bisa Hadir</option>
+‎  </select>
+‎  <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
+‎  <button class="btn" onclick="kirim()">Kirim</button>
+‎  <div id="list"></div>
+‎</section>
+‎
+‎</div>
 
-<section class="card reveal">
-  <h2>Putra Kami</h2>
-
-  <div class="profile-box">
-    <img src="dzaky.jpg">
-    <h3>RB. Dzaky Ferdiansyah S</h3>
-    <p>
-      Putra Pertama<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu Endang Aprilawati, S.Tr.Keb
-    </p>
-  </div>
-
-  <div class="profile-box">
-    <img src="dzikri.jpg">
-    <h3>RB. Dzikri Athar Alfariq</h3>
-    <p>
-      Putra Kedua<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu Endang Aprilawati, S.Tr.Keb
-    </p>
-  </div>
-</section>
-
-<section class="card reveal">
-  <h2>Waktu & Tempat</h2>
-  <p>📅 Minggu, 25 Januari 2026</p>
-  <p>⏰ Pukul 08.30 WIB – Selesai</p>
-  <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
-  <a class="btn" target="_blank"
-     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
-     Buka Google Maps
-  </a>
-</section>
-
-<section class="card reveal">
-  <h2>Menuju Hari Bahagia</h2>
-  <div class="countdown">
-    <div class="cd"><span id="d">0</span>Hari</div>
-    <div class="cd"><span id="h">0</span>Jam</div>
-    <div class="cd"><span id="m">0</span>Menit</div>
-    <div class="cd"><span id="s">0</span>Detik</div>
-  </div>
-</section>
-
-<section class="card reveal">
-  <h2>Gift</h2>
-  <p>
-    BRI<br>
-    0164-01-069928-50-2<br>
-    a.n Endang Aprilawati
-  </p>
-  <button class="btn"
-    onclick="navigator.clipboard.writeText('016401069928502')">
-    Salin Nomor Rekening
-  </button>
-</section>
-
-<section class="card reveal">
-  <h2>Buku Tamu</h2>
-  <input id="nama" placeholder="Nama">
-  <select id="status">
-    <option>InsyaAllah Hadir</option>
-    <option>Tidak Bisa Hadir</option>
-  </select>
-  <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
-  <button class="btn" onclick="kirim()">Kirim</button>
-  <div id="list"></div>
-</section>
-
-</div>
-  
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===== AMBIL DOM ===== */
-  const loader = document.getElementById("loader");
-  const cover = document.getElementById("cover");
-  const content = document.getElementById("content");
-  const music = document.getElementById("music");
-  const nama = document.getElementById("nama");
-  const status = document.getElementById("status");
-  const pesan = document.getElementById("pesan");
-  const list = document.getElementById("list");
+const loader=document.getElementById("loader");
+const cover=document.getElementById("cover");
+const content=document.getElementById("content");
+const music=document.getElementById("music");
+const nama=document.getElementById("nama");
+const status=document.getElementById("status");
+const pesan=document.getElementById("pesan");
+const list=document.getElementById("list");
 
-  const d = document.getElementById("d");
-  const h = document.getElementById("h");
-  const m = document.getElementById("m");
-  const s = document.getElementById("s");
+/* LOADER FIX */
+setTimeout(()=>{
+  loader.classList.add("hide");
+},1500);
 
-  /* ===== SUPABASE CONFIG (WAJIB ADA) ===== */
-  const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";
+/* OPEN INVITE FIX */
+window.openInvite = function(){
+  cover.classList.add("hide");
+  setTimeout(()=>{
+    cover.style.display="none";
+    content.classList.add("show");
+    music.play();
+  },1200);
+};
 
-  const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+/* REVEAL */
+const observer=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
+},{threshold:.18});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
-  /* ===== LOADER ===== */
-  window.addEventListener("load", () => {
-    setTimeout(() => loader.classList.add("hide"), 1500);
+/* SUPABASE */
+const SUPABASE_URL="https://nzlttcxetnjlryuxdetx.supabase.co";
+const SUPABASE_KEY="sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";
+
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+window.kirim=async()=>{
+  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
+  await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
+  nama.value="";pesan.value="";
+};
+
+const load=async()=>{
+  const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
+  list.innerHTML="";
+  data.forEach(d=>{
+    list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
   });
+};
+load();
 
-  /* SAFETY JIKA ERROR */
-  setTimeout(() => {
-    loader.style.display = "none";
-    content.style.display = "block";
-  }, 4000);
-
-  /* ===== BUKA UNDANGAN ===== */
-  window.openInvite = function () {
-    cover.classList.add("hide");
-    setTimeout(() => {
-      cover.style.display = "none";
-      content.style.display = "block";
-      content.classList.add("show");
-      music.play();
-    }, 1200);
-  };
-
-  /* ===== COUNTDOWN ===== */
-  const target = new Date("2026-01-25T08:30:00").getTime();
-  setInterval(() => {
-    const diff = target - Date.now();
-    if (diff <= 0) return;
-    d.innerText = Math.floor(diff / 86400000);
-    h.innerText = Math.floor(diff % 86400000 / 3600000);
-    m.innerText = Math.floor(diff % 3600000 / 60000);
-    s.innerText = Math.floor(diff % 60000 / 1000);
-  }, 1000);
-
-  /* ===== KIRIM BUKU TAMU ===== */
-  window.kirim = async function () {
-    if (!nama.value || !pesan.value) {
-      alert("Nama dan pesan wajib diisi 🙏");
-      return;
-    }
-
-    const { error } = await supabase
-      .from("bukutamu")
-      .insert([{
-        nama: nama.value,
-        status: status.value,
-        pesan: pesan.value
-      }]);
-
-    if (error) {
-      console.error(error);
-      alert("Gagal mengirim pesan");
-      return;
-    }
-
-    nama.value = "";
-    pesan.value = "";
-  };
-
-  /* ===== LOAD PESAN ===== */
-  async function loadPesan() {
-    const { data, error } = await supabase
-      .from("bukutamu")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    list.innerHTML = "";
-    data.forEach(d => {
-      list.innerHTML += `
-        <div class="comment">
-          <b>${d.nama}</b> — ${d.status}<br>
-          ${d.pesan}
-        </div>
-      `;
-    });
-  }
-
-  loadPesan();
-
-  /* ===== REALTIME ===== */
-  supabase
-    .channel("bukutamu-realtime")
-    .on(
-      "postgres_changes",
-      { event: "INSERT", schema: "public", table: "bukutamu" },
-      payload => {
-        const d = payload.new;
-        list.innerHTML =
-          `<div class="comment">
-            <b>${d.nama}</b> — ${d.status}<br>
-            ${d.pesan}
-          </div>` + list.innerHTML;
-      }
-    )
-    .subscribe();
+supabase.channel("rt")
+.on("postgres_changes",{event:"INSERT",schema:"public",table:"bukutamu"},p=>{
+  const d=p.new;
+  list.innerHTML=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`+list.innerHTML;
+}).subscribe();
 
 });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
 </body>
 </html>
