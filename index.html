@@ -13,6 +13,7 @@
 html,body{width:100%}
 
 body{
+  <body class="lock">
   font-family:'Poppins',sans-serif;
   background:url('bg-flower.png') center top / contain repeat-y;
   color:#fff;
@@ -59,11 +60,14 @@ h1,h2,h3{
   font-weight:600;
   margin-top:35px;
   cursor:pointer;
+  <button class="btn" onclick="openInvite()">Buka Undangan</button>
 }
 
 /* ===== CONTENT ===== */
 #content{display:none}
-
+  
+<div id="content">
+  
 section{
   padding:110px 22px;
   max-width:900px;
@@ -255,52 +259,129 @@ input,select,textarea{
 </div>
 
 <script>
-/* ===== OPEN UNDANGAN ===== */
-document.getElementById("openBtn").addEventListener("click",()=>{
-  document.getElementById("cover").classList.add("hidden");
-  document.getElementById("content").style.display="block";
-  document.body.style.overflow="auto";
-  document.getElementById("music").play().catch(()=>{});
+/* ================= UI CORE (ANTI STUCK) ================= */
+const loader  = document.getElementById("loader");
+const cover   = document.getElementById("cover");
+const content = document.getElementById("content");
+const music   = document.getElementById("music");
+
+document.body.classList.add("lock");
+content.style.display = "none";
+
+window.addEventListener("load", () => {
+  loader.style.display = "none";
 });
 
-/* ===== COUNTDOWN ===== */
-const target=new Date("2026-01-25T08:30:00").getTime();
-setInterval(()=>{
-  const t=target-Date.now();
-  if(t<=0)return;
-  d.innerText=Math.floor(t/86400000);
-  h.innerText=Math.floor(t%86400000/3600000);
-  m.innerText=Math.floor(t%3600000/60000);
-  s.innerText=Math.floor(t%60000/1000);
-},1000);
+function openInvite(){
+  document.body.classList.remove("lock");
+  cover.style.display = "none";
+  content.style.display = "block";
+  content.classList.add("show");
 
-/* ===== SUPABASE ===== */
-const supabase=window.supabase.createClient(
-  "https://nzlttcxetnjlryuxdetx.supabase.co",
-  "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
-);
-
-async function kirim(){
-  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi");
-  await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
-  nama.value=""; pesan.value="";
+  try { music.play(); } catch(e){}
 }
 
-async function load(){
-  const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
-  list.innerHTML="";
-  data.forEach(d=>{
-    list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
-  });
-}
-load();
+/* ================= COUNTDOWN ================= */
+const d = document.getElementById("d");
+const h = document.getElementById("h");
+const m = document.getElementById("m");
+const s = document.getElementById("s");
 
-supabase.channel("rt")
-.on("postgres_changes",{event:"INSERT",schema:"public",table:"bukutamu"},p=>{
-  const d=p.new;
-  list.innerHTML=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`+list.innerHTML;
-}).subscribe();
+const target = new Date("2026-01-25T08:30:00").getTime();
+
+setInterval(() => {
+  const diff = target - Date.now();
+  if (diff <= 0) return;
+
+  d.innerText = Math.floor(diff / 86400000);
+  h.innerText = Math.floor(diff % 86400000 / 3600000);
+  m.innerText = Math.floor(diff % 3600000 / 60000);
+  s.innerText = Math.floor(diff % 60000 / 1000);
+}, 1000);
+
+/* ================= SUPABASE SAFE MODE ================= */
+window.addEventListener("load", () => {
+
+  if (!window.supabase) {
+    console.warn("Supabase belum siap");
+    return;
+  }
+
+  const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";
+
+  const sb = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const nama   = document.getElementById("nama");
+  const status = document.getElementById("status");
+  const pesan  = document.getElementById("pesan");
+  const list   = document.getElementById("list");
+
+  window.kirim = async function(){
+    if(!nama.value || !pesan.value){
+      alert("Nama dan pesan wajib diisi 🙏");
+      return;
+    }
+
+    const {{ error } = await sb.from("bukutamu").insert([{
+      nama: nama.value,
+      status: status.value,
+      pesan: pesan.value
+    }]);
+
+    if(error){
+      alert("Pesan gagal dikirim");
+      console.error(error);
+      return;
+    }
+
+    nama.value = "";
+    pesan.value = "";
+  };
+
+  async function loadPesan(){
+    const { data, error } = await sb
+      .from("bukutamu")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+    if(error){
+      console.error(error);
+      return;
+    }
+
+    list.innerHTML = "";
+    data.forEach(d=>{
+      list.innerHTML += `
+        <div class="comment">
+          <b>${d.nama}</b> — ${d.status}<br>
+          ${d.pesan}
+        </div>
+      `;
+    });
+  }
+
+  loadPesan();
+
+  sb.channel("bukutamu-rt")
+    .on(
+      "postgres_changes",
+      { event:"INSERT", schema:"public", table:"bukutamu" },
+      payload=>{
+        const d = payload.new;
+        list.innerHTML =
+          `<div class="comment">
+            <b>${d.nama}</b> — ${d.status}<br>
+            ${d.pesan}
+          </div>` + list.innerHTML;
+      }
+    )
+    .subscribe();
+});
 </script>
-
+  
 </body>
 </html>
