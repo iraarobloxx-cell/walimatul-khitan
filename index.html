@@ -315,16 +315,23 @@ function openInvite(){
 }
 
 /* COUNTDOWN */
-const target=new Date("2026-01-25T08:30:00").getTime();
-setInterval(()=>{
-  const now=new Date().getTime();
-  const t=target-now;
-  if(t<0)return;
-  d.innerText=Math.floor(t/86400000);
-  h.innerText=Math.floor(t%86400000/3600000);
-  m.innerText=Math.floor(t%3600000/60000);
-  s.innerText=Math.floor(t%60000/1000);
-},1000);
+const d = document.getElementById("d");
+const h = document.getElementById("h");
+const m = document.getElementById("m");
+const s = document.getElementById("s");
+
+const target = new Date("2026-01-25T08:30:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = target - now;
+  if (diff <= 0) return;
+
+  d.innerText = Math.floor(diff / 86400000);
+  h.innerText = Math.floor(diff % 86400000 / 3600000);
+  m.innerText = Math.floor(diff % 3600000 / 60000);
+  s.innerText = Math.floor(diff % 60000 / 1000);
+}, 1000);
 
 /* REVEAL */
 const obs=new IntersectionObserver(e=>{
@@ -413,7 +420,16 @@ supabase
     }
   )
   .subscribe();
-  
+
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  const content = document.getElementById("content");
+
+  setTimeout(() => {
+    loader.style.display = "none";
+    content.style.display = "block";
+  }, 2000);
+});
 </script>
 
 </body>
