@@ -307,79 +307,132 @@ input,select,textarea{
 </section>
 
 </div>
-
 <script>
+const loader = document.getElementById("loader");
+const cover  = document.getElementById("cover");
+const content = document.getElementById("content");
+const music  = document.getElementById("music");
+
+/* ================= LOADER ================= */
+// Loader HANYA tampil 1.5 detik lalu hilang
+setTimeout(() => {
+  loader.classList.add("hide");
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 1000);
+}, 1500);
+
+/* ================= OPEN INVITE ================= */
 function openInvite(){
   document.body.classList.remove("lock");
 
-  const cover = document.getElementById("cover");
-  const content = document.getElementById("content");
-  const music = document.getElementById("music");
-
   cover.classList.add("hide");
-
   setTimeout(()=>{
-    cover.style.display="none";
+    cover.style.display = "none";
+    content.style.display = "block";
     content.classList.add("show");
 
     music.play().catch(()=>{});
   },1200);
 }
 
-/* COUNTDOWN */
-const d=document.getElementById("d"),
-      h=document.getElementById("h"),
-      m=document.getElementById("m"),
-      s=document.getElementById("s");
+/* ================= COUNTDOWN ================= */
+const d = document.getElementById("d");
+const h = document.getElementById("h");
+const m = document.getElementById("m");
+const s = document.getElementById("s");
 
-const target=new Date("2026-01-25T08:30:00").getTime();
+const target = new Date("2026-01-25T08:30:00").getTime();
+
 setInterval(()=>{
-  const t=target-new Date().getTime();
-  if(t<=0)return;
-  d.innerText=Math.floor(t/86400000);
-  h.innerText=Math.floor(t%86400000/3600000);
-  m.innerText=Math.floor(t%3600000/60000);
-  s.innerText=Math.floor(t%60000/1000);
+  const now = Date.now();
+  const diff = target - now;
+
+  if(diff <= 0){
+    d.innerText = h.innerText = m.innerText = s.innerText = 0;
+    return;
+  }
+
+  d.innerText = Math.floor(diff / 86400000);
+  h.innerText = Math.floor((diff % 86400000) / 3600000);
+  m.innerText = Math.floor((diff % 3600000) / 60000);
+  s.innerText = Math.floor((diff % 60000) / 1000);
 },1000);
 
-/* REVEAL */
-const obs=new IntersectionObserver(e=>{
-  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
-},{threshold:.2});
+/* ================= REVEAL ================= */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+},{threshold:0.2});
 document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
 
-/* SUPABASE */
-const supabase=window.supabase.createClient(
-  "https://nzlttcxetnjlryuxdetx.supabase.co",
-  "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
+/* ================= SUPABASE ================= */
+const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co";
+const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-const nama=document.getElementById("nama"),
-      status=document.getElementById("status"),
-      pesan=document.getElementById("pesan"),
-      list=document.getElementById("list");
+const nama   = document.getElementById("nama");
+const status = document.getElementById("status");
+const pesan  = document.getElementById("pesan");
+const list   = document.getElementById("list");
 
 async function kirim(){
-  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
-  await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
-  nama.value="";pesan.value="";
+  if(!nama.value || !pesan.value){
+    alert("Nama dan pesan wajib diisi 🙏");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("bukutamu")
+    .insert([{
+      nama: nama.value,
+      status: status.value,
+      pesan: pesan.value
+    }]);
+
+  if(error){
+    alert("Gagal mengirim pesan");
+    return;
+  }
+
+  nama.value = "";
+  pesan.value = "";
 }
 
-async function load(){
-  const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
-  list.innerHTML="";
+async function loadPesan(){
+  const { data } = await supabase
+    .from("bukutamu")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  list.innerHTML = "";
   data.forEach(d=>{
-    list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
+    list.innerHTML += `
+      <div class="comment">
+        <b>${d.nama}</b> — ${d.status}<br>
+        ${d.pesan}
+      </div>
+    `;
   });
 }
-load();
+loadPesan();
 
-supabase.channel("rt")
-.on("postgres_changes",{event:"INSERT",schema:"public",table:"bukutamu"},p=>{
-  const d=p.new;
-  list.innerHTML=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`+list.innerHTML;
-}).subscribe();
+supabase
+  .channel("bukutamu-realtime")
+  .on("postgres_changes",
+    {event:"INSERT",schema:"public",table:"bukutamu"},
+    payload=>{
+      const d = payload.new;
+      list.innerHTML =
+        `<div class="comment">
+          <b>${d.nama}</b> — ${d.status}<br>
+          ${d.pesan}
+        </div>` + list.innerHTML;
+    }
+  ).subscribe();
 </script>
-
-</body>
-</html>
