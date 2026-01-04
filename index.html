@@ -310,48 +310,56 @@ section.card.reveal:nth-of-type(3) a.btn {
 
 </div>
 
-<script>
+  <script>
+/* ================= BASIC DOM ================= */
 const loader = document.getElementById("loader");
-const cover = document.getElementById("cover");
-const content = document.getElementById("content");
-const music = document.getElementById("music");
+const cover  = document.getElementById("cover");
+const content= document.getElementById("content");
+const music  = document.getElementById("music");
 
-/** Fungsi sembunyikan loader dan tampilkan konten */
-function hideLoader() {
-  loader.classList.add("hide"); // Mulai animasi fade out
-  setTimeout(() => {
-    loader.style.display = "none"; // Sembunyikan loader secara penuh
-    content.style.display = "block"; // Tampilkan konten
-    content.classList.add("show"); // Animasi tampilkan konten
-  }, 1000);
-}
-
-/** Event ketika semua resource sudah dimuat sempurna */
+/* ================= LOADER FIX ================= */
+/* Loader HANYA hilang, TIDAK menampilkan content */
 window.addEventListener("load", () => {
-  hideLoader();
+  setTimeout(() => {
+    loader.classList.add("hide");
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 1000);
+  }, 1200);
 });
 
-/** Fallback supaya loader tidak stuck jika event load lama */
+/* Fallback anti macet */
 setTimeout(() => {
-  if (getComputedStyle(loader).display !== "none") {
-    console.warn("Fallback aktif: sembunyikan loader paksa");
-    hideLoader();
+  if (loader.style.display !== "none") {
+    loader.style.display = "none";
   }
-}, 5000); // 5 detik fallback
+}, 5000);
 
-function openInvite() {
+/* ================= OPEN INVITE ================= */
+function openInvite(){
   document.body.classList.remove("lock");
+
   cover.classList.add("hide");
+
   setTimeout(() => {
     cover.style.display = "none";
-    content.classList.add("show");
-    music.play().catch(e => {
-      console.warn("Audio play error:", e);
+    content.style.display = "block";
+    requestAnimationFrame(() => {
+      content.classList.add("show");
     });
+    music.play().catch(()=>{});
   }, 1200);
 }
 
-/* COUNTDOWN */
+/* ================= REVEAL ================= */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+},{threshold:0.2});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+/* ================= COUNTDOWN FIX ================= */
 const d = document.getElementById("d");
 const h = document.getElementById("h");
 const m = document.getElementById("m");
@@ -360,28 +368,19 @@ const s = document.getElementById("s");
 const target = new Date("2026-01-25T08:30:00").getTime();
 
 setInterval(() => {
-  const now = new Date().getTime();
+  const now = Date.now();
   const diff = target - now;
 
   if (diff <= 0) {
-    d.innerText = 0;
-    h.innerText = 0;
-    m.innerText = 0;
-    s.innerText = 0;
+    d.textContent = h.textContent = m.textContent = s.textContent = 0;
     return;
   }
 
-  d.innerText = Math.floor(diff / 86400000);
-  h.innerText = Math.floor((diff % 86400000) / 3600000);
-  m.innerText = Math.floor((diff % 3600000) / 60000);
-  s.innerText = Math.floor((diff % 60000) / 1000);
+  d.textContent = Math.floor(diff / 86400000);
+  h.textContent = Math.floor(diff % 86400000 / 3600000);
+  m.textContent = Math.floor(diff % 3600000 / 60000);
+  s.textContent = Math.floor(diff % 60000 / 1000);
 }, 1000);
-
-/* REVEAL */
-const obs = new IntersectionObserver(e => {
-  e.forEach(x => x.isIntersecting && x.target.classList.add("show"));
-},{threshold: .2});
-document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
 
 /* ================= SUPABASE ================= */
 const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co";
@@ -392,7 +391,6 @@ const supabase = window.supabase.createClient(
   SUPABASE_KEY
 );
 
-/* ================= DOM ================= */
 const nama   = document.getElementById("nama");
 const status = document.getElementById("status");
 const pesan  = document.getElementById("pesan");
@@ -414,8 +412,8 @@ async function kirim(){
     }]);
 
   if(error){
-    console.error(error);
     alert("Gagal mengirim pesan");
+    console.error(error);
     return;
   }
 
@@ -423,17 +421,12 @@ async function kirim(){
   pesan.value = "";
 }
 
-/* ================= LOAD DATA ================= */
+/* ================= LOAD PESAN ================= */
 async function loadPesan(){
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("bukutamu")
     .select("*")
     .order("created_at", { ascending:false });
-
-  if(error){
-    console.error(error);
-    return;
-  }
 
   list.innerHTML = "";
   data.forEach(d=>{
@@ -445,7 +438,6 @@ async function loadPesan(){
     `;
   });
 }
-
 loadPesan();
 
 /* ================= REALTIME ================= */
@@ -453,8 +445,8 @@ supabase
   .channel("bukutamu-realtime")
   .on(
     "postgres_changes",
-    { event: "INSERT", schema: "public", table: "bukutamu" },
-    payload => {
+    { event:"INSERT", schema:"public", table:"bukutamu" },
+    payload=>{
       const d = payload.new;
       list.innerHTML =
         `<div class="comment">
@@ -465,6 +457,3 @@ supabase
   )
   .subscribe();
 </script>
-
-</body>
-</html>
