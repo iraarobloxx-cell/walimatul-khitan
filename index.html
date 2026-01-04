@@ -68,7 +68,10 @@ body{
 section{
   padding:90px 20px;
   text-align:center;
-  background:url("bg-flower.png") center top repeat-y;
+  background-image:url("bg-flower.png");
+  background-repeat:no-repeat;
+  background-position:center top;
+  background-size:contain;
 }
 .card{
   background:#fffaf2;
@@ -86,9 +89,13 @@ section{
 
 /* ===== PROFILE ===== */
 .photo{
-  width:150px;height:150px;border-radius:50%;
-  object-fit:cover;border:4px solid #c9a14a;
-  margin:10px auto 14px;display:block;
+  width:180px;
+  height:auto;
+  border-radius:18px;
+  object-fit:contain;
+  border:4px solid #c9a14a;
+  background:#fff;
+  padding:6px;
 }
 .name{
   font-family:'Playfair Display',serif;
