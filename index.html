@@ -28,21 +28,13 @@ body::before{
 
 /* COVER */
 #cover{
-  position:fixed;
-  inset:0;
+  height:100vh;
   background:
     linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
     url('cover.jpg') center/cover;
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:999;
-  transition:opacity 1s ease, transform 1s ease;
-}
-#cover.hide{
-  opacity:0;
-  transform:scale(1.05);
-  pointer-events:none;
 }
 #cover .inner{
   background:rgba(0,0,0,.45);
@@ -50,22 +42,9 @@ body::before{
   border-radius:40px;
 }
 
-/* CONTENT */
 #content{
-  opacity:0;
-  transition:opacity 1.2s ease;
+  display:none;
 }
-
-/* EMBUN */
-.fog{
-  position:fixed;inset:0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(255,255,255,.05), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,.04), transparent 45%);
-  pointer-events:none;
-  animation:fog 12s ease-in-out infinite alternate;
-}
-@keyframes fog{from{opacity:.25}to{opacity:.5}}
 
 h1,h2,h3{
   font-family:'Playfair Display',serif;
@@ -86,7 +65,7 @@ section{
   border:1.5px solid rgba(212,175,55,.45);
 }
 
-.reveal{opacity:0;transform:translateY(40px);transition:1.4s}
+.reveal{opacity:0;transform:translateY(40px);transition:1.2s}
 .reveal.show{opacity:1;transform:none}
 
 .card p{
@@ -111,12 +90,6 @@ section{
 .flower{
   width:90px;
   margin:0 auto 25px;
-  animation:float 7s ease-in-out infinite;
-}
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(12px)}
-  100%{transform:translateY(0)}
 }
 
 /* PROFILE */
@@ -131,8 +104,7 @@ section{
   max-height:280px;
   object-fit:cover;
   border-radius:22px;
-  margin:0 auto 18px;
-  display:block;
+  margin-bottom:18px;
 }
 
 /* COUNTDOWN */
@@ -170,8 +142,6 @@ input,select,textarea{
 
 <body>
 
-<div class="fog"></div>
-
 <audio id="music" src="lagu.mp3" loop></audio>
 
 <section id="cover">
@@ -185,7 +155,6 @@ input,select,textarea{
 
 <div id="content">
 
-<!-- PEMBUKA -->
 <section class="card reveal">
   <img src="flower.png" class="flower">
   <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
@@ -196,7 +165,6 @@ input,select,textarea{
   </p>
 </section>
 
-<!-- PROFIL ANAK -->
 <section class="card reveal">
   <h2>Putra Kami</h2>
 
@@ -221,7 +189,6 @@ input,select,textarea{
   </div>
 </section>
 
-<!-- WAKTU -->
 <section class="card reveal">
   <h2>Waktu & Tempat</h2>
   <p>📅 Minggu, 25 Januari 2026</p>
@@ -233,7 +200,6 @@ input,select,textarea{
   </a>
 </section>
 
-<!-- COUNTDOWN -->
 <section class="card reveal">
   <h2>Menuju Hari Bahagia</h2>
   <p>
@@ -249,7 +215,6 @@ input,select,textarea{
   </div>
 </section>
 
-<!-- GIFT -->
 <section class="card reveal">
   <h2>Gift</h2>
   <p>
@@ -268,7 +233,6 @@ input,select,textarea{
   </button>
 </section>
 
-<!-- BUKU TAMU -->
 <section class="card reveal">
   <h2>Buku Tamu</h2>
   <p>
@@ -288,28 +252,22 @@ input,select,textarea{
 </div>
 
 <script>
-/* ========== OPEN INVITE (iOS SAFE) ========== */
-window.openInvite = function(){
-  const cover = document.getElementById("cover");
-  const content = document.getElementById("content");
-  const music = document.getElementById("music");
+/* OPEN INVITE – FIX TOTAL */
+function openInvite(){
+  document.getElementById("cover").style.display="none";
+  const content=document.getElementById("content");
+  content.style.display="block";
 
-  cover.classList.add("hide");
-  content.style.opacity = "1";
+  try{
+    document.getElementById("music").play();
+  }catch(e){}
+}
 
-  try{ music.play(); }catch(e){}
-};
-
-/* ========== REVEAL ========== */
-const obs = new IntersectionObserver(e=>{
-  e.forEach(x=>x.isIntersecting && x.target.classList.add("show"));
-},{threshold:.2});
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
-
-/* ========== COUNTDOWN ========== */
+/* COUNTDOWN */
 const target=new Date("2026-01-25T08:30:00").getTime();
 setInterval(()=>{
-  const t=target-Date.now();
+  const now=new Date().getTime();
+  const t=target-now;
   if(t<0)return;
   d.innerText=Math.floor(t/86400000);
   h.innerText=Math.floor(t%86400000/3600000);
@@ -317,16 +275,32 @@ setInterval(()=>{
   s.innerText=Math.floor(t%60000/1000);
 },1000);
 
-/* ========== SUPABASE ========== */
-const supabase = window.supabase.createClient(
+/* REVEAL */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
+},{threshold:.2});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+
+/* SUPABASE */
+const supabase=window.supabase.createClient(
   "https://nzlttcxetnjlryuxdetx.supabase.co",
   "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
 );
 
 async function kirim(){
-  if(!nama.value||!pesan.value) return alert("Nama dan pesan wajib diisi 🙏");
-  await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
+  const nama=document.getElementById("nama");
+  const status=document.getElementById("status");
+  const pesan=document.getElementById("pesan");
+  const list=document.getElementById("list");
+
+  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
+
+  await supabase.from("bukutamu").insert([{
+    nama:nama.value,status:status.value,pesan:pesan.value
+  }]);
+
   nama.value="";pesan.value="";
+  loadPesan();
 }
 
 async function loadPesan(){
@@ -337,12 +311,6 @@ async function loadPesan(){
   });
 }
 loadPesan();
-
-supabase.channel("rt")
-.on("postgres_changes",{event:"INSERT",schema:"public",table:"bukutamu"},p=>{
-  const d=p.new;
-  list.innerHTML=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`+list.innerHTML;
-}).subscribe();
 </script>
 
 </body>
