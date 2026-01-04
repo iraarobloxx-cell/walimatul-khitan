@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walimatul Khitan Dzaky & Dzikri</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
@@ -26,24 +26,20 @@ body::before{
   z-index:-1;
 }
 
-/* ===== LOADER FIX TOTAL (CSS ONLY) ===== */
+/* LOADER */
 #loader{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:#0b0b0b;
   z-index:9999;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation:loaderHide 1s ease forwards;
-  animation-delay:2.5s;
+  transition:opacity 1s ease,visibility 1s ease;
 }
-@keyframes loaderHide{
-  to{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-  }
+#loader.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none; /* 🔥 FIX ANDROID */
 }
 .loader-ring{
   width:80px;height:80px;
@@ -72,18 +68,10 @@ body::before{
   border-radius:40px;
 }
 
-#content{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1.4s ease;
-  pointer-events:none;
-}
-#content.show{
-  opacity:1;
-  transform:none;
-  pointer-events:auto;
-}
+#content{display:none;opacity:0;transition:1.4s}
+#content.show{display:block;opacity:1}
 
+/* EMBUN */
 .fog{
   position:fixed;inset:0;
   background:
@@ -285,7 +273,8 @@ input,select,textarea{
     0164-01-069928-50-2<br>
     a.n Endang Aprilawati
   </p>
-  <button class="btn" onclick="navigator.clipboard.writeText('016401069928502')">
+  <button class="btn"
+    onclick="navigator.clipboard.writeText('016401069928502')">
     Salin Nomor Rekening
   </button>
 </section>
@@ -307,132 +296,53 @@ input,select,textarea{
 </section>
 
 </div>
+
 <script>
-const loader = document.getElementById("loader");
-const cover  = document.getElementById("cover");
-const content = document.getElementById("content");
-const music  = document.getElementById("music");
+/* LOADER */
+setTimeout(()=>document.getElementById("loader").classList.add("hide"),1500);
 
-/* ================= LOADER ================= */
-// Loader HANYA tampil 1.5 detik lalu hilang
-setTimeout(() => {
-  loader.classList.add("hide");
-  setTimeout(() => {
-    loader.style.display = "none";
-  }, 1000);
-}, 1500);
-
-/* ================= OPEN INVITE ================= */
-function openInvite(){
+/* OPEN INVITE */
+window.openInvite=function(){
   document.body.classList.remove("lock");
+  document.getElementById("cover").classList.add("hide");
 
-  cover.classList.add("hide");
   setTimeout(()=>{
-    cover.style.display = "none";
-    content.style.display = "block";
-    content.classList.add("show");
-
-    music.play().catch(()=>{});
+    document.getElementById("cover").style.display="none";
+    const c=document.getElementById("content");
+    c.style.display="block";
+    c.classList.add("show");
+    document.getElementById("music").play().catch(()=>{});
   },1200);
-}
+};
 
-/* ================= COUNTDOWN ================= */
-const d = document.getElementById("d");
-const h = document.getElementById("h");
-const m = document.getElementById("m");
-const s = document.getElementById("s");
-
-const target = new Date("2026-01-25T08:30:00").getTime();
-
+/* COUNTDOWN */
+const target=new Date("2026-01-25T08:30:00").getTime();
 setInterval(()=>{
-  const now = Date.now();
-  const diff = target - now;
-
-  if(diff <= 0){
-    d.innerText = h.innerText = m.innerText = s.innerText = 0;
-    return;
-  }
-
-  d.innerText = Math.floor(diff / 86400000);
-  h.innerText = Math.floor((diff % 86400000) / 3600000);
-  m.innerText = Math.floor((diff % 3600000) / 60000);
-  s.innerText = Math.floor((diff % 60000) / 1000);
+  const t=target-new Date().getTime();
+  if(t<=0)return;
+  d.innerText=Math.floor(t/86400000);
+  h.innerText=Math.floor(t%86400000/3600000);
+  m.innerText=Math.floor(t%3600000/60000);
+  s.innerText=Math.floor(t%60000/1000);
 },1000);
 
-/* ================= REVEAL ================= */
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add("show");
-  });
-},{threshold:0.2});
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+/* REVEAL */
+new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
+},{threshold:.2}).observe(document.body);
 
-/* ================= SUPABASE ================= */
-const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co";
-const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+/* SUPABASE */
+const supabase=window.supabase.createClient(
+  "https://nzlttcxetnjlryuxdetx.supabase.co",
+  "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
 );
 
-const nama   = document.getElementById("nama");
-const status = document.getElementById("status");
-const pesan  = document.getElementById("pesan");
-const list   = document.getElementById("list");
-
 async function kirim(){
-  if(!nama.value || !pesan.value){
-    alert("Nama dan pesan wajib diisi 🙏");
-    return;
-  }
-
-  const { error } = await supabase
-    .from("bukutamu")
-    .insert([{
-      nama: nama.value,
-      status: status.value,
-      pesan: pesan.value
-    }]);
-
-  if(error){
-    alert("Gagal mengirim pesan");
-    return;
-  }
-
-  nama.value = "";
-  pesan.value = "";
+  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
+  await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
+  nama.value="";pesan.value="";
 }
-
-async function loadPesan(){
-  const { data } = await supabase
-    .from("bukutamu")
-    .select("*")
-    .order("created_at",{ascending:false});
-
-  list.innerHTML = "";
-  data.forEach(d=>{
-    list.innerHTML += `
-      <div class="comment">
-        <b>${d.nama}</b> — ${d.status}<br>
-        ${d.pesan}
-      </div>
-    `;
-  });
-}
-loadPesan();
-
-supabase
-  .channel("bukutamu-realtime")
-  .on("postgres_changes",
-    {event:"INSERT",schema:"public",table:"bukutamu"},
-    payload=>{
-      const d = payload.new;
-      list.innerHTML =
-        `<div class="comment">
-          <b>${d.nama}</b> — ${d.status}<br>
-          ${d.pesan}
-        </div>` + list.innerHTML;
-    }
-  ).subscribe();
 </script>
+
+</body>
+</html>
