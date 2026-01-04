@@ -391,6 +391,20 @@ setInterval(()=>{
   s.innerText=Math.floor(diff%60000/1000);
 },1000);
 
+/* ===== FIX COUNTDOWN (WAJIB ADA) ===== */
+const d = document.getElementById("d");
+const h = document.getElementById("h");
+const m = document.getElementById("m");
+const s = document.getElementById("s");
+
+  // SAFETY: kalau JS error, loader tetap hilang
+setTimeout(() => {
+  const loader = document.getElementById("loader");
+  const content = document.getElementById("content");
+  if (loader) loader.style.display = "none";
+  if (content) content.style.display = "block";
+}, 3000);
+  
   // 🔐 ANTI STUCK LOADER (FIX FINAL)
 setTimeout(() => {
   const loader = document.getElementById("loader");
