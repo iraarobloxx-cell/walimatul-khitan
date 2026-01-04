@@ -114,6 +114,36 @@ section{padding:90px 20px;text-align:center}
 .cd-box span{font-size:22px;font-weight:700;display:block;line-height:1.2}
 .cd-box small{font-size:12px;color:#7a6a50}
 
+  /* ===== FIX COUNTDOWN OVERFLOW (MOBILE SAFE) ===== */
+.countdown-wrap{
+  max-width:100%;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+}
+
+.countdown{
+  width:100%;
+  max-width:420px; /* kunci agar tidak melebar */
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+@media (max-width:420px){
+  .countdown{
+    max-width:100%;
+    gap:8px;
+  }
+  .cd-box{
+    min-width:0;        /* PENTING */
+    padding:12px 6px;
+  }
+  .cd-box span{
+    font-size:20px;
+  }
+}
+
 /* ===== GALLERY ===== */
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:24px}
 .gallery img{width:100%;border-radius:14px}
@@ -181,11 +211,11 @@ footer{padding:60px 20px;text-align:center;color:#6b563f}
       <div class="card reveal">
         <h2 class="shimmer">Menuju Hari Bahagia</h2>
         <div class="countdown">
-          <div class="cd-box"><span id="d">0</span><small>Hari</small></div>
-          <div class="cd-box"><span id="h">0</span><small>Jam</small></div>
-          <div class="cd-box"><span id="m">0</span><small>Menit</small></div>
-          <div class="cd-box"><span id="s">0</span><small>Detik</small></div>
-        </div>
+    <div class="cd-box"><span id="d">0</span><small>Hari</small></div>
+    <div class="cd-box"><span id="h">0</span><small>Jam</small></div>
+    <div class="cd-box"><span id="m">0</span><small>Menit</small></div>
+    <div class="cd-box"><span id="s">0</span><small>Detik</small></div>
+  </div>
       </div>
     </section>
 
