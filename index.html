@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walimatul Khitan Dzaky & Dzikri</title>
@@ -386,6 +385,8 @@ input,select,textarea{
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
 <script>
   // ===== AMBIL DOM =====
 const loader=document.getElementById("loader");
@@ -401,6 +402,12 @@ const list=document.getElementById("list");
 window.addEventListener("load", () => {
   setTimeout(() => loader.classList.add("hide"), 1500);
 });
+
+  // SAFETY: kalau JS error
+setTimeout(() => {
+  if (loader) loader.style.display = "none";
+  if (content) content.style.display = "block";
+}, 3000);
 
 /* PARTIKEL EMAS */
 for (let i = 0; i < 28; i++) {
@@ -445,7 +452,6 @@ setInterval(()=>{
   s.innerText = Math.floor(diff % 60000 / 1000);
 },1000);
 
-<script>
 /* ================= SUPABASE ================= */
 const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co"; 
 const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";    
