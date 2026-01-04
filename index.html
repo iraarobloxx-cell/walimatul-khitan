@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walimatul Khitan Dzaky & Dzikri</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;overflow-x:hidden}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:url('bg-flower.png') center top / contain repeat-y;
+  color:#fff;
+  text-align:center;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:-1;
+}
+
+/* COVER */
+#cover{
+  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
+    url('cover.jpg') center/cover;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#cover .inner{
+  background:rgba(0,0,0,.45);
+  padding:55px;
+  border-radius:40px;
+}
+
+#content{
+  display:none;
+}
+
+h1,h2,h3{
+  font-family:'Playfair Display',serif;
+  color:#d4af37;
+}
+
+section{
+  padding:110px 22px;
+  max-width:900px;
+  margin:auto;
+}
+
+.card{
+  background:rgba(0,0,0,.35);
+  border-radius:34px;
+  padding:42px 28px;
+  margin-bottom:90px;
+  border:1.5px solid rgba(212,175,55,.45);
+}
+
+.reveal{opacity:0;transform:translateY(40px);transition:1.2s}
+.reveal.show{opacity:1;transform:none}
+
+.card p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  line-height:1.9;
+  margin:14px 0;
+}
+
+.btn{
+  background:#d4af37;
+  color:#000;
+  padding:15px 40px;
+  border-radius:40px;
+  border:none;
+  font-weight:600;
+  margin-top:35px;
+  cursor:pointer;
+}
+
+/* FLOWER */
+.flower{
+  width:90px;
+  margin:0 auto 25px;
+}
+
+/* PROFILE */
+.profile-box{
+  border:1px solid rgba(212,175,55,.5);
+  border-radius:30px;
+  padding:30px;
+  margin-bottom:45px;
+}
+.profile-box img{
+  width:80%;
+  max-height:280px;
+  object-fit:cover;
+  border-radius:22px;
+  margin-bottom:18px;
+}
+
+/* COUNTDOWN */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-top:35px;
+}
+.cd span{
+  display:block;
+  font-size:30px;
+  font-weight:bold;
+  color:#d4af37;
+}
+
+/* FORM */
+input,select,textarea{
+  width:100%;
+  padding:15px;
+  border-radius:16px;
+  border:none;
+  margin-top:15px;
+}
+.comment{
+  background:rgba(255,255,255,.1);
+  border-left:3px solid #d4af37;
+  border-radius:16px;
+  padding:14px;
+  margin-top:14px;
+  text-align:left;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="lagu.mp3" loop></audio>
+
+<section id="cover">
+  <div class="inner">
+    <h1>Walimatul Khitan</h1>
+    <h2>Dzaky & Dzikri</h2>
+    <p>Tasyakuran Khitanan</p>
+    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+  </div>
+</section>
+
+<div id="content">
+
+<section class="card reveal">
+  <img src="flower.png" class="flower">
+  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
+  <p>
+    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
+    Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang
+    Bapak/Ibu/Saudara/i untuk menghadiri acara Walimatul Khitan putra kami tercinta.
+  </p>
+</section>
+
+<section class="card reveal">
+  <h2>Putra Kami</h2>
+
+  <div class="profile-box">
+    <img src="dzaky.jpg">
+    <h3>RB. Dzaky Ferdiansyah S</h3>
+    <p>
+      Putra Pertama<br>
+      Bapak Sudarman, Amd<br>
+      & Ibu Endang Aprilawati, S.Tr.Keb
+    </p>
+  </div>
+
+  <div class="profile-box">
+    <img src="dzikri.jpg">
+    <h3>RB. Dzikri Athar Alfariq</h3>
+    <p>
+      Putra Kedua<br>
+      Bapak Sudarman, Amd<br>
+      & Ibu Endang Aprilawati, S.Tr.Keb
+    </p>
+  </div>
+</section>
+
+<section class="card reveal">
+  <h2>Waktu & Tempat</h2>
+  <p>📅 Minggu, 25 Januari 2026</p>
+  <p>⏰ Pukul 08.30 WIB – Selesai</p>
+  <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
+  <a class="btn" target="_blank"
+     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
+     Buka Google Maps
+  </a>
+</section>
+
+<section class="card reveal">
+  <h2>Menuju Hari Bahagia</h2>
+  <p>
+    Hitung mundur menuju hari pelaksanaan
+    Walimatul Khitan Dzaky & Dzikri
+    yang InsyaAllah penuh keberkahan.
+  </p>
+  <div class="countdown">
+    <div class="cd"><span id="d">0</span>Hari</div>
+    <div class="cd"><span id="h">0</span>Jam</div>
+    <div class="cd"><span id="m">0</span>Menit</div>
+    <div class="cd"><span id="s">0</span>Detik</div>
+  </div>
+</section>
+
+<section class="card reveal">
+  <h2>Gift</h2>
+  <p>
+    Doa restu Bapak/Ibu/Saudara/i merupakan hadiah
+    terindah bagi kami. Apabila berkenan memberikan
+    tanda kasih, dapat disampaikan melalui:
+  </p>
+  <p>
+    BRI<br>
+    0164-01-069928-50-2<br>
+    a.n Endang Aprilawati
+  </p>
+  <button class="btn"
+    onclick="navigator.clipboard.writeText('016401069928502')">
+    Salin Nomor Rekening
+  </button>
+</section>
+
+<section class="card reveal">
+  <h2>Buku Tamu</h2>
+  <p>
+    Silakan konfirmasi kehadiran serta titipkan
+    pesan dan doa terbaik untuk putra kami.
+  </p>
+  <input id="nama" placeholder="Nama">
+  <select id="status">
+    <option>InsyaAllah Hadir</option>
+    <option>Tidak Bisa Hadir</option>
+  </select>
+  <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
+  <button class="btn" onclick="kirim()">Kirim</button>
+  <div id="list"></div>
+</section>
+
+</div>
+
+<script>
+/* OPEN INVITE – FIX TOTAL */
+function openInvite(){
+  document.getElementById("cover").style.display="none";
+  const content=document.getElementById("content");
+  content.style.display="block";
+
+  try{
+    document.getElementById("music").play();
+  }catch(e){}
+}
+
+/* COUNTDOWN */
+const target=new Date("2026-01-25T08:30:00").getTime();
+setInterval(()=>{
+  const now=new Date().getTime();
+  const t=target-now;
+  if(t<0)return;
+  d.innerText=Math.floor(t/86400000);
+  h.innerText=Math.floor(t%86400000/3600000);
+  m.innerText=Math.floor(t%3600000/60000);
+  s.innerText=Math.floor(t%60000/1000);
+},1000);
+
+/* REVEAL */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
+},{threshold:.2});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+
+/* SUPABASE */
+const supabase=window.supabase.createClient(
+  "https://nzlttcxetnjlryuxdetx.supabase.co",
+  "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
+);
+
+async function kirim(){
+  const nama=document.getElementById("nama");
+  const status=document.getElementById("status");
+  const pesan=document.getElementById("pesan");
+  const list=document.getElementById("list");
+
+  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
+
+  await supabase.from("bukutamu").insert([{
+    nama:nama.value,status:status.value,pesan:pesan.value
+  }]);
+
+  nama.value="";pesan.value="";
+  loadPesan();
+}
+
+async function loadPesan(){
+  const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
+  list.innerHTML="";
+  data.forEach(d=>{
+    list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
+  });
+}
+loadPesan();
+</script>
+
+</body>
+    </html>
