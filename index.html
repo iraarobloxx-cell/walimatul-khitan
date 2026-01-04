@@ -72,8 +72,17 @@ body::before{
   border-radius:40px;
 }
 
-#content{display:none;opacity:0;transition:1.4s}
-#content.show{display:block;opacity:1}
+#content{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.4s ease;
+  pointer-events:none;
+}
+#content.show{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
 
 .fog{
   position:fixed;inset:0;
@@ -302,11 +311,18 @@ input,select,textarea{
 <script>
 function openInvite(){
   document.body.classList.remove("lock");
-  document.getElementById("cover").classList.add("hide");
+
+  const cover = document.getElementById("cover");
+  const content = document.getElementById("content");
+  const music = document.getElementById("music");
+
+  cover.classList.add("hide");
+
   setTimeout(()=>{
-    document.getElementById("cover").style.display="none";
-    document.getElementById("content").classList.add("show");
-    document.getElementById("music").play();
+    cover.style.display="none";
+    content.classList.add("show");
+
+    music.play().catch(()=>{});
   },1200);
 }
 
