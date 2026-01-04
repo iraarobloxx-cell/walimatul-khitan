@@ -3,260 +3,347 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Walimatul Khitan Dzaky & Dzikri</title>
+<title>Undangan Khitanan Dzaky & Dzikri</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Amiri&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden}
 body{
-  font-family:Poppins,sans-serif;
-  background:url('bg-flower.png') center top/contain repeat-y;
-  color:#fff;
+  font-family:'Poppins',sans-serif;
+  background:#f6f1eb;
+  color:#3a2a1a;
+}
+.hidden{display:none}
+
+/* ===== SHIMMER ===== */
+.shimmer{
+  background:linear-gradient(120deg,#9c7b2f 0%,#e9d39b 50%,#9c7b2f 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:shimmer 2.8s linear infinite;
+}
+@keyframes shimmer{to{background-position:200% center}}
+
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:all .9s ease}
+.reveal.show{opacity:1;transform:none}
+
+/* ===== COVER ===== */
+#cover{
+  position:fixed;inset:0;z-index:100;
+  background:
+    linear-gradient(rgba(58,42,26,.75),rgba(58,42,26,.9)),
+    url("cover.jpg") center/cover;
+  display:flex;align-items:center;justify-content:center;
+}
+.cover-box{
+  background:rgba(255,248,235,.96);
+  border:3px solid #c9a14a;
+  border-radius:28px;
+  padding:42px 28px;
+  max-width:420px;
   text-align:center;
 }
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:-1;
+.cover-box h1{
+  font-family:'Playfair Display',serif;
+  font-size:32px;
 }
-h1,h2,h3{font-family:'Playfair Display',serif;color:#d4af37}
-
-#cover{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
-    url('cover.jpg') center/cover;
-}
-#cover .inner{
-  background:rgba(0,0,0,.45);
-  padding:40px;
-  border-radius:30px;
-}
-
-#content{display:none;padding-bottom:60px}
-
-section{
-  max-width:900px;
-  margin:60px auto;
-  padding:40px 22px;
-  background:rgba(0,0,0,.35);
-  border-radius:30px;
-  border:1px solid rgba(212,175,55,.4);
-}
-
-p{
-  font-family:'Cormorant Garamond',serif;
-  font-size:19px;
-  line-height:1.9;
-  margin:12px 0;
-}
-
-.btn{
-  margin-top:25px;
-  background:#d4af37;
-  color:#000;
-  padding:14px 36px;
-  border-radius:40px;
+.cover-box button{
+  margin-top:20px;
+  padding:14px 38px;
   border:none;
-  font-weight:600;
-  cursor:pointer;
+  border-radius:40px;
+  background:linear-gradient(135deg,#c9a14a,#9c7b2f);
+  color:#fff;
+  font-size:16px;
 }
 
-.flower{
-  width:90px;
-  margin:0 auto 20px;
+/* ===== MAIN ===== */
+#main{height:100vh;overflow-y:auto;scroll-behavior:smooth}
+
+/* ===== SECTION ===== */
+section{
+  padding:90px 20px;
+  text-align:center;
+  background:url("bg-flower.png") center top repeat-y;
+}
+.card{
+  background:#fffaf2;
+  border:2px solid #e2cfa3;
+  border-radius:28px;
+  padding:42px 30px;
+  max-width:560px;
+  margin:0 auto 60px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
 }
 
-.profile-box{
-  margin-top:30px;
+/* ===== BISMILLAH ===== */
+.flower-top{width:90px;margin:0 auto 40px;display:block}
+.bismillah{font-family:'Amiri',serif;font-size:26px;margin-bottom:18px}
+
+/* ===== PROFILE ===== */
+.photo{
+  width:150px;height:150px;border-radius:50%;
+  object-fit:cover;border:4px solid #c9a14a;
+  margin:10px auto 14px;display:block;
 }
-.profile-box img{
-  width:80%;
-  max-width:300px;
-  border-radius:20px;
-  margin-bottom:15px;
+.name{
+  font-family:'Playfair Display',serif;
+  font-size:28px;color:#9c7b2f;margin-bottom:10px;
 }
 
+/* ===== COUNTDOWN ===== */
 .countdown{
   display:flex;
   justify-content:center;
-  gap:16px;
-  margin-top:30px;
+  gap:12px;
+  margin-top:25px;
 }
-.countdown div span{
+.cd-box{
+  background:#fff;
+  border:1px solid #e2cfa3;
+  border-radius:14px;
+  padding:12px 10px;
+  min-width:70px;
+}
+.cd-box span{
+  font-size:22px;
+  font-weight:600;
   display:block;
-  font-size:28px;
-  font-weight:bold;
-  color:#d4af37;
+}
+.cd-box small{
+  font-size:12px;
+  color:#777;
 }
 
-input,select,textarea{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:none;
-  margin-top:12px;
+/* ===== GALLERY ===== */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:25px;
 }
-.comment{
-  background:rgba(255,255,255,.1);
-  border-left:3px solid #d4af37;
+.gallery img{
+  width:100%;
   border-radius:14px;
-  padding:12px;
-  margin-top:12px;
-  text-align:left;
+}
+
+/* ===== BUTTON ===== */
+.btn{
+  display:inline-block;
+  margin-top:22px;
+  padding:14px 34px;
+  border-radius:40px;
+  background:linear-gradient(135deg,#c9a14a,#9c7b2f);
+  color:#fff;
+  text-decoration:none;
+}
+
+/* ===== GIFT ===== */
+.copy-btn{
+  margin-top:10px;
+  padding:10px 26px;
+  border:none;
+  border-radius:30px;
+  background:#9c7b2f;
+  color:#fff;
+}
+
+/* ===== FLOAT SHARE ===== */
+.share{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  background:#25D366;
+  color:#fff;
+  border-radius:40px;
+  padding:12px 18px;
+  text-decoration:none;
+  box-shadow:0 10px 22px rgba(0,0,0,.25);
+}
+
+footer{
+  padding:60px 20px;
+  text-align:center;
+  color:#6b563f;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="lagu.mp3" loop></audio>
+<audio id="music" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
 
 <!-- COVER -->
-<section id="cover">
-  <div class="inner">
-    <h1>Walimatul Khitan</h1>
-    <h2>Dzaky & Dzikri</h2>
-    <p>Tasyakuran Khitanan</p>
-    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+<div id="cover">
+  <div class="cover-box">
+    <h1 class="shimmer">Undangan Khitanan</h1>
+    <p>Kepada Yth.</p>
+    <p><b id="guestName">Bapak / Ibu / Saudara(i)</b></p>
+    <button onclick="openInvite()">Buka Undangan</button>
   </div>
-</section>
+</div>
 
-<!-- CONTENT -->
-<div id="content">
+<div id="main" class="hidden">
 
+<!-- PEMBUKA -->
 <section>
-  <img src="flower.png" class="flower">
-  <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
-  <p>
-    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
-    Dengan memohon rahmat dan ridho Allah SWT,
-    kami bermaksud mengundang Bapak/Ibu/Saudara/i
-    untuk menghadiri acara Walimatul Khitan putra kami tercinta.
-  </p>
-</section>
-
-<section>
-  <h2>Putra Kami</h2>
-
-  <div class="profile-box">
-    <img src="dzaky.jpg">
-    <h3>RB. Dzaky Ferdiansyah S</h3>
+  <div class="card reveal">
+    <img src="flower.png" class="flower-top">
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
     <p>
-      Putra Pertama<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu Endang Aprilawati, S.Tr.Keb
-    </p>
-  </div>
-
-  <div class="profile-box">
-    <img src="dzikri.jpg">
-    <h3>RB. Dzikri Athar Alfariq</h3>
-    <p>
-      Putra Kedua<br>
-      Bapak Sudarman, Amd<br>
-      & Ibu Endang Aprilawati, S.Tr.Keb
+      Dengan memohon rahmat dan ridho Allah SWT,
+      kami mengundang Bapak/Ibu/Saudara/i
+      untuk menghadiri acara khitanan putra kami.
     </p>
   </div>
 </section>
 
+<!-- COUNTDOWN -->
 <section>
-  <h2>Waktu & Tempat</h2>
-  <p>📅 Minggu, 25 Januari 2026</p>
-  <p>⏰ Pukul 08.30 WIB – Selesai</p>
-  <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
-  <a class="btn" target="_blank"
-     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
-     Buka Google Maps
-  </a>
-</section>
-
-<section>
-  <h2>Menuju Hari Bahagia</h2>
-  <div class="countdown">
-    <div><span id="d">0</span>Hari</div>
-    <div><span id="h">0</span>Jam</div>
-    <div><span id="m">0</span>Menit</div>
-    <div><span id="s">0</span>Detik</div>
+  <div class="card reveal">
+    <h2 class="shimmer">Menuju Hari Bahagia</h2>
+    <p>
+      Insya Allah acara khitanan ini akan dilaksanakan
+      pada waktu yang telah ditentukan.
+      Semoga Allah SWT memudahkan setiap langkah
+      dan memberikan keberkahan.
+    </p>
+    <div class="countdown">
+      <div class="cd-box"><span id="d">0</span><small>Hari</small></div>
+      <div class="cd-box"><span id="h">0</span><small>Jam</small></div>
+      <div class="cd-box"><span id="m">0</span><small>Menit</small></div>
+      <div class="cd-box"><span id="s">0</span><small>Detik</small></div>
+    </div>
   </div>
 </section>
 
+<!-- PROFIL DZAKY -->
 <section>
-  <h2>Gift</h2>
-  <p>
-    BRI<br>
-    0164-01-069928-50-2<br>
-    a.n Endang Aprilawati
-  </p>
-  <button class="btn"
-    onclick="navigator.clipboard.writeText('016401069928502')">
-    Salin Nomor Rekening
-  </button>
+  <div class="card reveal">
+    <img src="dzaky.jpg" class="photo">
+    <div class="name shimmer">RB.Dzaky Ferdiansyah S</div>
+    <p>
+      Putra pertama dari Bapak <b>Sudarman, Amd.</b><br>
+      dan Ibu <b>Endang Aprilwati, S.Tr.Keb</b><br><br>
+      Semoga menjadi anak yang sholeh,
+      berakhlak mulia, dan senantiasa
+      dalam lindungan Allah SWT.
+    </p>
+  </div>
 </section>
 
+<!-- PROFIL DZIKRI -->
 <section>
-  <h2>Buku Tamu</h2>
-  <input id="nama" placeholder="Nama">
-  <select id="status">
-    <option>InsyaAllah Hadir</option>
-    <option>Tidak Bisa Hadir</option>
-  </select>
-  <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
-  <button class="btn" onclick="kirim()">Kirim</button>
-  <div id="list"></div>
+  <div class="card reveal">
+    <img src="dzikri.jpg" class="photo">
+    <div class="name shimmer">RB.Dzikri Athar Alfariq S</div>
+    <p>
+      Putra kedua dari Bapak <b>Sudarman, Amd.</b><br>
+      dan Ibu <b>Endang Aprilwati, S.Tr.Keb</b><br><br>
+      Semoga tumbuh menjadi anak yang sehat,
+      cerdas, dan membanggakan keluarga.
+    </p>
+  </div>
 </section>
+
+<!-- KENANGAN -->
+<section>
+  <div class="card reveal">
+    <h2 class="shimmer">Kenangan Indah</h2>
+    <p>
+      Setiap langkah kecil adalah awal dari perjalanan panjang.
+      Setiap senyuman adalah doa,
+      dan setiap momen adalah anugerah dari Allah SWT.
+      Berikut beberapa kenangan indah
+      yang terekam dalam perjalanan putra kami.
+    </p>
+    <div class="gallery">
+      <img src="kenangan1.jpg">
+      <img src="kenangan2.jpg">
+      <img src="kenangan3.jpg">
+      <img src="kenangan4.jpg">
+      <img src="kenangan5.jpg">
+      <img src="kenangan6.jpg">
+    </div>
+  </div>
+</section>
+
+<!-- HADIAH -->
+<section>
+  <div class="card reveal">
+    <h2 class="shimmer">Hadiah</h2>
+    <p>
+      Doa restu Bapak/Ibu/Saudara/i
+      merupakan hadiah yang paling berharga.
+      Namun apabila berkenan memberikan tanda kasih,
+      dapat disampaikan melalui rekening berikut:
+    </p>
+    <p>
+      <b>BRI</b><br>
+      <span id="rek">0164-01-069928-50-2</span><br>
+      a.n. <b>Endang Aprilwati</b>
+    </p>
+    <button class="copy-btn" onclick="copyRek()">Salin No. Rekening</button>
+  </div>
+</section>
+
+<footer class="reveal">
+  Wassalamu’alaikum Warahmatullahi Wabarakatuh
+</footer>
+
+<a class="share" id="waShare" target="_blank">Bagikan WhatsApp</a>
 
 </div>
 
 <script>
-/* OPEN */
+// ===== Nama Tamu dari URL =====
+const params=new URLSearchParams(window.location.search);
+const to=params.get('to');
+if(to) document.getElementById('guestName').innerText=decodeURIComponent(to);
+
+// ===== Open Invite =====
 function openInvite(){
-  document.getElementById("cover").style.display="none";
-  document.getElementById("content").style.display="block";
-  try{document.getElementById("music").play()}catch(e){}
+  document.getElementById('cover').style.display='none';
+  document.getElementById('main').classList.remove('hidden');
+  document.body.style.overflow='auto';
+  document.getElementById('music').play().catch(()=>{});
 }
 
-/* COUNTDOWN */
+// ===== Copy Rekening =====
+function copyRek(){
+  navigator.clipboard.writeText(document.getElementById('rek').innerText);
+  alert("Nomor rekening berhasil disalin");
+}
+
+// ===== Countdown =====
 const target=new Date("2026-01-25T08:30:00+07:00").getTime();
 setInterval(()=>{
-  const t=target-new Date().getTime();
-  if(t<0)return;
-  d.innerText=Math.floor(t/86400000);
-  h.innerText=Math.floor(t%86400000/3600000);
-  m.innerText=Math.floor(t%3600000/60000);
-  s.innerText=Math.floor(t%60000/1000);
+  const now=new Date().getTime();
+  let diff=target-now;
+  if(diff<0) diff=0;
+  document.getElementById('d').innerText=Math.floor(diff/(1000*60*60*24));
+  document.getElementById('h').innerText=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  document.getElementById('m').innerText=Math.floor((diff%(1000*60*60))/(1000*60));
+  document.getElementById('s').innerText=Math.floor((diff%(1000*60))/1000);
 },1000);
 
-/* SUPABASE */
-const supabase=window.supabase.createClient(
-  "https://nzlttcxetnjlryuxdetx.supabase.co",
-  "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
-);
+// ===== WA Share =====
+const wa=document.getElementById('waShare');
+const msg=`Undangan Khitanan Dzaky & Dzikri%0A%0AKepada Yth. ${to?decodeURIComponent(to):''}%0A%0ASilakan buka undangan:%0A${location.href}`;
+wa.href=`https://wa.me/?text=${msg}`;
 
-async function kirim(){
-  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
-  await supabase.from("bukutamu").insert([{
-    nama:nama.value,
-    status:status.value,
-    pesan:pesan.value
-  }]);
-  nama.value="";pesan.value="";
-  loadPesan();
-}
-
-async function loadPesan(){
-  const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
-  list.innerHTML="";
-  data.forEach(d=>{
-    list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
-  });
-}
+// ===== Reveal on Scroll =====
+const items=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>e.isIntersecting&&e.target.classList.add('show'))
+},{threshold:.2});
+items.forEach(i=>io.observe(i));
 </script>
 
 </body>
