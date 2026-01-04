@@ -10,7 +10,6 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;overflow-x:hidden}
 body{
   font-family:Poppins,sans-serif;
   background:url('bg-flower.png') center top/contain repeat-y;
@@ -18,56 +17,39 @@ body{
   text-align:center;
 }
 body::before{
-  content:"";
+  content:'';
   position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.55);
   z-index:-1;
 }
+h1,h2,h3{font-family:'Playfair Display',serif;color:#d4af37}
 
-/* COVER */
 #cover{
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.8)),
-    url('cover.jpg') center/cover;
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:10;
+  background:
+    linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
+    url('cover.jpg') center/cover;
 }
-#cover .box{
-  background:rgba(0,0,0,.55);
-  padding:45px;
+#cover .inner{
+  background:rgba(0,0,0,.45);
+  padding:40px;
   border-radius:30px;
 }
-#cover h1,#cover h2{color:#d4af37;font-family:'Playfair Display',serif}
-#cover button{
-  margin-top:30px;
-  padding:15px 40px;
-  border:none;
-  border-radius:40px;
-  background:#d4af37;
-  font-weight:600;
-  cursor:pointer;
-}
 
-/* CONTENT */
-#content{display:none}
+#content{display:none;padding-bottom:60px}
 
 section{
-  padding:90px 20px;
   max-width:900px;
-  margin:auto;
-}
-.card{
-  background:rgba(0,0,0,.4);
+  margin:60px auto;
+  padding:40px 22px;
+  background:rgba(0,0,0,.35);
   border-radius:30px;
-  padding:40px 25px;
   border:1px solid rgba(212,175,55,.4);
-  margin-bottom:80px;
 }
-h2{color:#d4af37;font-family:'Playfair Display',serif}
+
 p{
   font-family:'Cormorant Garamond',serif;
   font-size:19px;
@@ -75,40 +57,57 @@ p{
   margin:12px 0;
 }
 
-/* PROFILE */
-.profile img{
+.btn{
+  margin-top:25px;
+  background:#d4af37;
+  color:#000;
+  padding:14px 36px;
+  border-radius:40px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.flower{
+  width:90px;
+  margin:0 auto 20px;
+}
+
+.profile-box{
+  margin-top:30px;
+}
+.profile-box img{
   width:80%;
   max-width:300px;
   border-radius:20px;
   margin-bottom:15px;
 }
 
-/* COUNTDOWN */
 .countdown{
   display:flex;
   justify-content:center;
-  gap:15px;
-  margin-top:25px;
+  gap:16px;
+  margin-top:30px;
 }
-.cd span{
+.countdown div span{
   display:block;
   font-size:28px;
-  color:#d4af37;
   font-weight:bold;
+  color:#d4af37;
 }
 
-/* FORM */
 input,select,textarea{
   width:100%;
   padding:14px;
-  margin-top:12px;
-  border-radius:15px;
+  border-radius:14px;
   border:none;
+  margin-top:12px;
 }
 .comment{
   background:rgba(255,255,255,.1);
-  padding:12px;
   border-left:3px solid #d4af37;
+  border-radius:14px;
+  padding:12px;
   margin-top:12px;
   text-align:left;
 }
@@ -117,70 +116,91 @@ input,select,textarea{
 
 <body>
 
+<audio id="music" src="lagu.mp3" loop></audio>
+
 <!-- COVER -->
-<div id="cover">
-  <div class="box">
+<section id="cover">
+  <div class="inner">
     <h1>Walimatul Khitan</h1>
     <h2>Dzaky & Dzikri</h2>
     <p>Tasyakuran Khitanan</p>
-    <button onclick="openInvite()">Buka Undangan</button>
+    <button class="btn" onclick="openInvite()">Buka Undangan</button>
   </div>
-</div>
-
-<audio id="music" src="lagu.mp3" loop></audio>
+</section>
 
 <!-- CONTENT -->
 <div id="content">
 
-<section class="card">
+<section>
+  <img src="flower.png" class="flower">
   <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
   <p>
     Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
-    Dengan memohon rahmat dan ridho Allah SWT, kami mengundang
-    Bapak/Ibu/Saudara/i untuk menghadiri Walimatul Khitan putra kami.
+    Dengan memohon rahmat dan ridho Allah SWT,
+    kami bermaksud mengundang Bapak/Ibu/Saudara/i
+    untuk menghadiri acara Walimatul Khitan putra kami tercinta.
   </p>
 </section>
 
-<section class="card">
+<section>
   <h2>Putra Kami</h2>
-  <div class="profile">
+
+  <div class="profile-box">
     <img src="dzaky.jpg">
     <h3>RB. Dzaky Ferdiansyah S</h3>
-    <p>Putra Pertama<br>Bapak Sudarman, Amd<br>& Ibu Endang Aprilawati, S.Tr.Keb</p>
+    <p>
+      Putra Pertama<br>
+      Bapak Sudarman, Amd<br>
+      & Ibu Endang Aprilawati, S.Tr.Keb
+    </p>
   </div>
-  <div class="profile">
+
+  <div class="profile-box">
     <img src="dzikri.jpg">
     <h3>RB. Dzikri Athar Alfariq</h3>
-    <p>Putra Kedua<br>Bapak Sudarman, Amd<br>& Ibu Endang Aprilawati, S.Tr.Keb</p>
+    <p>
+      Putra Kedua<br>
+      Bapak Sudarman, Amd<br>
+      & Ibu Endang Aprilawati, S.Tr.Keb
+    </p>
   </div>
 </section>
 
-<section class="card">
+<section>
   <h2>Waktu & Tempat</h2>
   <p>📅 Minggu, 25 Januari 2026</p>
-  <p>⏰ 08.30 WIB – Selesai</p>
+  <p>⏰ Pukul 08.30 WIB – Selesai</p>
   <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
-  <a href="https://maps.google.com/?q=Gedung+Pertemuan+Prumnas+Griya+Anugerah" target="_blank">
-    <button>Buka Google Maps</button>
+  <a class="btn" target="_blank"
+     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
+     Buka Google Maps
   </a>
 </section>
 
-<section class="card">
+<section>
   <h2>Menuju Hari Bahagia</h2>
   <div class="countdown">
-    <div class="cd"><span id="d">0</span>Hari</div>
-    <div class="cd"><span id="h">0</span>Jam</div>
-    <div class="cd"><span id="m">0</span>Menit</div>
-    <div class="cd"><span id="s">0</span>Detik</div>
+    <div><span id="d">0</span>Hari</div>
+    <div><span id="h">0</span>Jam</div>
+    <div><span id="m">0</span>Menit</div>
+    <div><span id="s">0</span>Detik</div>
   </div>
 </section>
 
-<section class="card">
+<section>
   <h2>Gift</h2>
-  <p>BRI<br>0164-01-069928-50-2<br>a.n Endang Aprilawati</p>
+  <p>
+    BRI<br>
+    0164-01-069928-50-2<br>
+    a.n Endang Aprilawati
+  </p>
+  <button class="btn"
+    onclick="navigator.clipboard.writeText('016401069928502')">
+    Salin Nomor Rekening
+  </button>
 </section>
 
-<section class="card">
+<section>
   <h2>Buku Tamu</h2>
   <input id="nama" placeholder="Nama">
   <select id="status">
@@ -188,7 +208,7 @@ input,select,textarea{
     <option>Tidak Bisa Hadir</option>
   </select>
   <textarea id="pesan" placeholder="Pesan & Doa"></textarea>
-  <button onclick="kirim()">Kirim</button>
+  <button class="btn" onclick="kirim()">Kirim</button>
   <div id="list"></div>
 </section>
 
@@ -199,15 +219,14 @@ input,select,textarea{
 function openInvite(){
   document.getElementById("cover").style.display="none";
   document.getElementById("content").style.display="block";
-  document.getElementById("music").play().catch(()=>{});
+  try{document.getElementById("music").play()}catch(e){}
 }
 
 /* COUNTDOWN */
-const target = new Date("2026-01-25T08:30:00").getTime();
+const target=new Date("2026-01-25T08:30:00+07:00").getTime();
 setInterval(()=>{
-  const now = Date.now();
-  const t = target - now;
-  if(t<=0)return;
+  const t=target-new Date().getTime();
+  if(t<0)return;
   d.innerText=Math.floor(t/86400000);
   h.innerText=Math.floor(t%86400000/3600000);
   m.innerText=Math.floor(t%3600000/60000);
@@ -215,26 +234,29 @@ setInterval(()=>{
 },1000);
 
 /* SUPABASE */
-const supabase = window.supabase.createClient(
+const supabase=window.supabase.createClient(
   "https://nzlttcxetnjlryuxdetx.supabase.co",
   "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3"
 );
 
 async function kirim(){
-  if(!nama.value||!pesan.value)return alert("Lengkapi data");
-  await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
+  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
+  await supabase.from("bukutamu").insert([{
+    nama:nama.value,
+    status:status.value,
+    pesan:pesan.value
+  }]);
   nama.value="";pesan.value="";
-  load();
+  loadPesan();
 }
 
-async function load(){
+async function loadPesan(){
   const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
   list.innerHTML="";
   data.forEach(d=>{
     list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
   });
 }
-load();
 </script>
 
 </body>
