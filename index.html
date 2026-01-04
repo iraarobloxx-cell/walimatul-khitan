@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Walimatul Khitan Dzaky & Dzikri</title>
@@ -444,43 +445,84 @@ setInterval(()=>{
   s.innerText = Math.floor(diff % 60000 / 1000);
 },1000);
 
-/* FIREBASE BUKU TAMU */
-const firebaseConfig = {
-  apiKey: "ISI_API_KEY_KAMU",
-  authDomain: "ISI_PROJECT.firebaseapp.com",
-  projectId: "ISI_PROJECT_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+<script>
+/* ================= SUPABASE ================= */
+const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co"; 
+const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";    
 
-function kirim(){
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+/* ================= KIRIM PESAN ================= */
+async function kirim(){
   if(!nama.value || !pesan.value){
     alert("Nama dan pesan wajib diisi 🙏");
     return;
   }
-  db.collection("bukutamu").add({
-    nama: nama.value,
-    status: status.value,
-    pesan: pesan.value,
-    waktu: firebase.firestore.FieldValue.serverTimestamp()
-  });
-  nama.value="";
-  pesan.value="";
+
+  const { error } = await supabase
+    .from("bukutamu")
+    .insert([{
+      nama: nama.value,
+      status: status.value,
+      pesan: pesan.value
+    }]);
+
+  if(error){
+    alert("Gagal mengirim pesan");
+    console.error(error);
+    return;
+  }
+
+  nama.value = "";
+  pesan.value = "";
 }
 
-db.collection("bukutamu")
-.orderBy("waktu","desc")
-.onSnapshot(snap=>{
-  list.innerHTML="";
-  snap.forEach(doc=>{
-    const d=doc.data();
-    list.innerHTML+=`
-      <div class="comment">
-        <b>${d.nama}</b> — ${d.status}<br>${d.pesan}
-      </div>`;
-  });
-});
-</script>
+/* ================= AMBIL DATA ================= */
+async function loadPesan(){
+  const { data, error } = await supabase
+    .from("bukutamu")
+    .select("*")
+    .order("created_at", { ascending:false });
 
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  list.innerHTML = "";
+  data.forEach(d=>{
+    list.innerHTML += `
+      <div class="comment">
+        <b>${d.nama}</b> — ${d.status}<br>
+        ${d.pesan}
+      </div>
+    `;
+  });
+}
+
+loadPesan();
+
+/* ================= REALTIME ================= */
+supabase
+  .channel("bukutamu-realtime")
+  .on(
+    "postgres_changes",
+    { event: "INSERT", schema: "public", table: "bukutamu" },
+    payload => {
+      const d = payload.new;
+      list.innerHTML = `
+        <div class="comment">
+          <b>${d.nama}</b> — ${d.status}<br>
+          ${d.pesan}
+        </div>
+      ` + list.innerHTML;
+    }
+  )
+  .subscribe();
+</script>
+  
 </body>
 </html>
