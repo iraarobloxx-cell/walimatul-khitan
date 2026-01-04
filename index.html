@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Walimatul Khitan Dzaky & Dzikri</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -34,8 +34,12 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:center;
+  transition: opacity 1s ease, visibility 1s ease;
 }
-#loader.hide{opacity:0;visibility:hidden;transition:1s}
+#loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
 .loader-ring{
   width:80px;height:80px;
   border:3px solid rgba(212,175,55,.25);
@@ -136,11 +140,12 @@ section{
   margin-bottom:45px;
 }
 .profile-box img{
-  width:100%;
+  width:80%;
   max-height:280px;
   object-fit:cover;
   border-radius:22px;
-  margin-bottom:18px;
+  margin:0 auto 18px;
+  display: block;
 }
 
 /* COUNTDOWN */
@@ -173,6 +178,15 @@ input,select,textarea{
   margin-top:14px;
   text-align:left;
 }
+
+/* Tambahan jarak tombol maps dengan alamat */
+section.card.reveal:nth-of-type(3) p {
+  margin-bottom: 15px;
+}
+section.card.reveal:nth-of-type(3) a.btn {
+  margin-top: 25px;
+  display: inline-block;
+}
 </style>
 </head>
 
@@ -196,10 +210,10 @@ input,select,textarea{
 
 <!-- PEMBUKA -->
 <section class="card reveal">
-  <img src="flower.png" class="flower">
+  <img src="flower.png" class="flower" />
   <p><b>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</b></p>
   <p>
-    Assalamu’alaikum Warahmatullahi Wabarakatuh<br><br>
+    Assalamu’alaikum Warahmatullahi Wabarakatuh<br /><br />
     Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud mengundang
     Bapak/Ibu/Saudara/i untuk menghadiri acara Walimatul Khitan putra kami tercinta.
   </p>
@@ -210,21 +224,21 @@ input,select,textarea{
   <h2>Putra Kami</h2>
 
   <div class="profile-box">
-    <img src="dzaky.jpg">
+    <img src="dzaky.jpg" alt="Foto Dzaky" />
     <h3>RB. Dzaky Ferdiansyah S</h3>
     <p>
-      Putra Pertama<br>
-      Bapak Sudarman, Amd<br>
+      Putra Pertama<br />
+      Bapak Sudarman, Amd<br />
       & Ibu Endang Aprilawati, S.Tr.Keb
     </p>
   </div>
 
   <div class="profile-box">
-    <img src="dzikri.jpg">
+    <img src="dzikri.jpg" alt="Foto Dzikri" />
     <h3>RB. Dzikri Athar Alfariq</h3>
     <p>
-      Putra Kedua<br>
-      Bapak Sudarman, Amd<br>
+      Putra Kedua<br />
+      Bapak Sudarman, Amd<br />
       & Ibu Endang Aprilawati, S.Tr.Keb
     </p>
   </div>
@@ -236,7 +250,7 @@ input,select,textarea{
   <p>📅 Minggu, 25 Januari 2026</p>
   <p>⏰ Pukul 08.30 WIB – Selesai</p>
   <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
-  <a class="btn" target="_blank"
+  <a class="btn" target="_blank" 
      href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
      Buka Google Maps
   </a>
@@ -267,8 +281,8 @@ input,select,textarea{
     tanda kasih, dapat disampaikan melalui:
   </p>
   <p>
-    BRI<br>
-    0164-01-069928-50-2<br>
+    BRI<br />
+    0164-01-069928-50-2<br />
     a.n Endang Aprilawati
   </p>
   <button class="btn"
@@ -284,7 +298,7 @@ input,select,textarea{
     Silakan konfirmasi kehadiran serta titipkan
     pesan dan doa terbaik untuk putra kami.
   </p>
-  <input id="nama" placeholder="Nama">
+  <input id="nama" placeholder="Nama" />
   <select id="status">
     <option>InsyaAllah Hadir</option>
     <option>Tidak Bisa Hadir</option>
@@ -295,23 +309,46 @@ input,select,textarea{
 </section>
 
 </div>
-  
+
 <script>
-const loader=document.getElementById("loader");
-const cover=document.getElementById("cover");
-const content=document.getElementById("content");
-const music=document.getElementById("music");
+const loader = document.getElementById("loader");
+const cover = document.getElementById("cover");
+const content = document.getElementById("content");
+const music = document.getElementById("music");
 
-setTimeout(()=>loader.classList.add("hide"),1500);
+/** Fungsi sembunyikan loader dan tampilkan konten */
+function hideLoader() {
+  loader.classList.add("hide"); // Mulai animasi fade out
+  setTimeout(() => {
+    loader.style.display = "none"; // Sembunyikan loader secara penuh
+    content.style.display = "block"; // Tampilkan konten
+    content.classList.add("show"); // Animasi tampilkan konten
+  }, 1000);
+}
 
-function openInvite(){
+/** Event ketika semua resource sudah dimuat sempurna */
+window.addEventListener("load", () => {
+  hideLoader();
+});
+
+/** Fallback supaya loader tidak stuck jika event load lama */
+setTimeout(() => {
+  if (getComputedStyle(loader).display !== "none") {
+    console.warn("Fallback aktif: sembunyikan loader paksa");
+    hideLoader();
+  }
+}, 5000); // 5 detik fallback
+
+function openInvite() {
   document.body.classList.remove("lock");
   cover.classList.add("hide");
-  setTimeout(()=>{
-    cover.style.display="none";
+  setTimeout(() => {
+    cover.style.display = "none";
     content.classList.add("show");
-    music.play();
-  },1200);
+    music.play().catch(e => {
+      console.warn("Audio play error:", e);
+    });
+  }, 1200);
 }
 
 /* COUNTDOWN */
@@ -325,20 +362,27 @@ const target = new Date("2026-01-25T08:30:00").getTime();
 setInterval(() => {
   const now = new Date().getTime();
   const diff = target - now;
-  if (diff <= 0) return;
+
+  if (diff <= 0) {
+    d.innerText = 0;
+    h.innerText = 0;
+    m.innerText = 0;
+    s.innerText = 0;
+    return;
+  }
 
   d.innerText = Math.floor(diff / 86400000);
-  h.innerText = Math.floor(diff % 86400000 / 3600000);
-  m.innerText = Math.floor(diff % 3600000 / 60000);
-  s.innerText = Math.floor(diff % 60000 / 1000);
+  h.innerText = Math.floor((diff % 86400000) / 3600000);
+  m.innerText = Math.floor((diff % 3600000) / 60000);
+  s.innerText = Math.floor((diff % 60000) / 1000);
 }, 1000);
 
 /* REVEAL */
-const obs=new IntersectionObserver(e=>{
-  e.forEach(x=>x.isIntersecting&&x.target.classList.add("show"));
-},{threshold:.2});
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
-  
+const obs = new IntersectionObserver(e => {
+  e.forEach(x => x.isIntersecting && x.target.classList.add("show"));
+},{threshold: .2});
+document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+
 /* ================= SUPABASE ================= */
 const SUPABASE_URL = "https://nzlttcxetnjlryuxdetx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_sk_fGe3lQBHgyA58bGDgcw_U_Qj2OK3";
@@ -420,16 +464,6 @@ supabase
     }
   )
   .subscribe();
-
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const content = document.getElementById("content");
-
-  setTimeout(() => {
-    loader.style.display = "none";
-    content.style.display = "block";
-  }, 2000);
-});
 </script>
 
 </body>
