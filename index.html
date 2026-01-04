@@ -11,13 +11,13 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%}
-body.lock{overflow:hidden;height:100vh}
 
 body{
   font-family:'Poppins',sans-serif;
   background:url('bg-flower.png') center top / contain repeat-y;
   color:#fff;
   text-align:center;
+  overflow:hidden;
 }
 body::before{
   content:'';
@@ -26,57 +26,43 @@ body::before{
   z-index:-1;
 }
 
-/* ===== LOADER (SIMPLE & SAFE) ===== */
-#loader{
-  position:fixed;
-  inset:0;
-  background:#0b0b0b;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-#loader.hide{
-  display:none; /* 🔥 FIX TOTAL */
-}
-.loader-ring{
-  width:80px;height:80px;
-  border:3px solid rgba(212,175,55,.25);
-  border-top:3px solid #d4af37;
-  border-radius:50%;
-  animation:spin 1.2s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
 /* ===== COVER ===== */
 #cover{
-  height:100vh;
+  position:fixed;
+  inset:0;
   background:
     linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),
     url('cover.jpg') center/cover;
   display:flex;
   align-items:center;
   justify-content:center;
+  z-index:10;
 }
-#cover.hide{
-  display:none;
-}
+#cover.hidden{display:none}
 #cover .inner{
   background:rgba(0,0,0,.45);
   padding:55px;
   border-radius:40px;
 }
 
-/* ===== CONTENT ===== */
-#content{
-  display:none;
-}
-
-/* ===== GLOBAL ===== */
 h1,h2,h3{
   font-family:'Playfair Display',serif;
   color:#d4af37;
 }
+
+.btn{
+  background:#d4af37;
+  color:#000;
+  padding:15px 40px;
+  border-radius:40px;
+  border:none;
+  font-weight:600;
+  margin-top:35px;
+  cursor:pointer;
+}
+
+/* ===== CONTENT ===== */
+#content{display:none}
 
 section{
   padding:110px 22px;
@@ -99,24 +85,11 @@ section{
   margin:14px 0;
 }
 
-.btn{
-  background:#d4af37;
-  color:#000;
-  padding:15px 40px;
-  border-radius:40px;
-  border:none;
-  font-weight:600;
-  margin-top:35px;
-  cursor:pointer;
-}
-
-/* FLOWER */
 .flower{
   width:90px;
   margin:0 auto 25px;
 }
 
-/* PROFILE */
 .profile-box{
   border:1px solid rgba(212,175,55,.5);
   border-radius:30px;
@@ -165,24 +138,19 @@ input,select,textarea{
 </style>
 </head>
 
-<body class="lock">
-
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-ring"></div>
-</div>
+<body>
 
 <audio id="music" src="lagu.mp3" loop></audio>
 
 <!-- COVER -->
-<section id="cover">
+<div id="cover">
   <div class="inner">
     <h1>Walimatul Khitan</h1>
     <h2>Dzaky & Dzikri</h2>
     <p>Tasyakuran Khitanan</p>
-    <button class="btn" onclick="openInvite()">Buka Undangan</button>
+    <button class="btn" id="openBtn">Buka Undangan</button>
   </div>
-</section>
+</div>
 
 <!-- CONTENT -->
 <div id="content">
@@ -222,17 +190,6 @@ input,select,textarea{
 </section>
 
 <section class="card">
-  <h2>Waktu & Tempat</h2>
-  <p>📅 Minggu, 25 Januari 2026</p>
-  <p>⏰ Pukul 08.30 WIB – Selesai</p>
-  <p>📍 Gedung Pertemuan Prumnas Griya Anugerah</p>
-  <a class="btn" target="_blank"
-     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah">
-     Buka Google Maps
-  </a>
-</section>
-
-<section class="card">
   <h2>Menuju Hari Bahagia</h2>
   <div class="countdown">
     <div class="cd"><span id="d">0</span>Hari</div>
@@ -242,8 +199,36 @@ input,select,textarea{
   </div>
 </section>
 
+<!-- WAKTU & TEMPAT -->
+<section class="card">
+  <h2>Waktu & Tempat</h2>
+
+  <p>
+    📅 <b>Minggu, 25 Januari 2026</b>
+  </p>
+
+  <p>
+    ⏰ <b>Pukul 08.30 WIB – Selesai</b>
+  </p>
+
+  <p>
+    📍 <b>Gedung Pertemuan Prumnas Griya Anugerah</b>
+  </p>
+
+  <a class="btn" 
+     href="https://www.google.com/maps/search/?api=1&query=Gedung+Pertemuan+Prumnas+Griya+Anugerah"
+     target="_blank">
+     Buka Google Maps
+  </a>
+</section>
+
+<!-- GIFT -->
 <section class="card">
   <h2>Gift</h2>
+  <p>
+    Doa restu Bapak/Ibu/Saudara/i merupakan hadiah terindah bagi kami.
+    Apabila berkenan memberikan tanda kasih, dapat disampaikan melalui:
+  </p>
   <p>
     BRI<br>
     0164-01-069928-50-2<br>
@@ -254,6 +239,7 @@ input,select,textarea{
   </button>
 </section>
 
+<!-- BUKU TAMU -->
 <section class="card">
   <h2>Buku Tamu</h2>
   <input id="nama" placeholder="Nama">
@@ -269,16 +255,13 @@ input,select,textarea{
 </div>
 
 <script>
-/* ===== DOM READY ===== */
-document.getElementById("loader").classList.add("hide");
-
-/* ===== OPEN INVITE ===== */
-function openInvite(){
-  document.body.classList.remove("lock");
-  document.getElementById("cover").style.display="none";
+/* ===== OPEN UNDANGAN ===== */
+document.getElementById("openBtn").addEventListener("click",()=>{
+  document.getElementById("cover").classList.add("hidden");
   document.getElementById("content").style.display="block";
+  document.body.style.overflow="auto";
   document.getElementById("music").play().catch(()=>{});
-}
+});
 
 /* ===== COUNTDOWN ===== */
 const target=new Date("2026-01-25T08:30:00").getTime();
@@ -298,10 +281,25 @@ const supabase=window.supabase.createClient(
 );
 
 async function kirim(){
-  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi 🙏");
+  if(!nama.value||!pesan.value)return alert("Nama dan pesan wajib diisi");
   await supabase.from("bukutamu").insert([{nama:nama.value,status:status.value,pesan:pesan.value}]);
-  nama.value="";pesan.value="";
+  nama.value=""; pesan.value="";
 }
+
+async function load(){
+  const {data}=await supabase.from("bukutamu").select("*").order("created_at",{ascending:false});
+  list.innerHTML="";
+  data.forEach(d=>{
+    list.innerHTML+=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`;
+  });
+}
+load();
+
+supabase.channel("rt")
+.on("postgres_changes",{event:"INSERT",schema:"public",table:"bukutamu"},p=>{
+  const d=p.new;
+  list.innerHTML=`<div class="comment"><b>${d.nama}</b> — ${d.status}<br>${d.pesan}</div>`+list.innerHTML;
+}).subscribe();
 </script>
 
 </body>
